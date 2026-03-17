@@ -13,6 +13,8 @@
       --accent: #ffd54a;
       --accent2: #72d7ff;
       --shadow: rgba(0,0,0,0.38);
+      --good: #71f0a4;
+      --danger: #ff7f7f;
     }
 
     * { box-sizing: border-box; }
@@ -52,7 +54,7 @@
     }
 
     .panel {
-      min-width: 185px;
+      min-width: 190px;
       padding: 12px 14px;
       border-radius: 18px;
       background: var(--panel);
@@ -77,14 +79,16 @@
       margin: 5px 0;
     }
 
-    .stat span:last-child { font-weight: 800; }
+    .stat span:last-child {
+      font-weight: 800;
+    }
 
     .help {
       color: var(--muted);
       font-size: 13px;
       line-height: 1.45;
       text-align: right;
-      min-width: 230px;
+      min-width: 250px;
     }
 
     .overlay {
@@ -99,7 +103,9 @@
     }
 
     .card {
-      width: min(94vw, 700px);
+      width: min(96vw, 860px);
+      max-height: 92vh;
+      overflow: auto;
       padding: 28px;
       border-radius: 30px;
       background: linear-gradient(180deg, rgba(17,23,30,0.95), rgba(9,13,17,0.96));
@@ -125,7 +131,7 @@
 
     .card p {
       margin: 10px auto;
-      max-width: 560px;
+      max-width: 640px;
       color: var(--muted);
       line-height: 1.55;
       font-size: 15px;
@@ -170,7 +176,7 @@
       box-shadow: 0 10px 24px rgba(255, 203, 46, 0.3);
     }
 
-    .mapTag {
+    .mapTag, .sessionTag {
       margin-top: 14px;
       display: inline-block;
       padding: 8px 12px;
@@ -180,6 +186,12 @@
       color: #c7f0ff;
       font-size: 13px;
       font-weight: 700;
+    }
+
+    .sessionTag.gold {
+      background: rgba(255,213,74,0.12);
+      border-color: rgba(255,213,74,0.28);
+      color: #ffe69a;
     }
 
     .countdown {
@@ -200,28 +212,29 @@
       position: fixed;
       left: 0;
       right: 0;
-      bottom: 14px;
+      bottom: max(14px, env(safe-area-inset-bottom));
       z-index: 24;
       display: none;
       justify-content: space-between;
-      padding: 0 14px;
+      align-items: end;
+      padding: 0 max(14px, env(safe-area-inset-left)) 0 max(14px, env(safe-area-inset-right));
       pointer-events: none;
     }
 
     .controlCluster {
       display: grid;
-      grid-template-columns: repeat(3, 64px);
-      grid-template-rows: repeat(2, 64px);
-      gap: 8px;
+      grid-template-columns: repeat(3, 72px);
+      grid-template-rows: repeat(2, 72px);
+      gap: 10px;
       pointer-events: auto;
     }
 
     .touchBtn {
-      border-radius: 18px;
+      border-radius: 20px;
       background: rgba(10,14,18,0.82);
       border: 1px solid rgba(255,255,255,0.12);
       color: white;
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 900;
       display: flex;
       align-items: center;
@@ -239,24 +252,193 @@
 
     .blank { visibility: hidden; }
 
+    .mobileHint {
+      display: none;
+      margin-top: 10px;
+      font-size: 13px;
+      color: #cfe8ff;
+      opacity: 0.92;
+    }
+
+    .shopHeader {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 14px 0 8px;
+    }
+
+    .shopGrid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+      text-align: left;
+    }
+
+    .shopItem {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+    }
+
+    .shopItemTop {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 8px;
+    }
+
+    .shopItem h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .shopItem small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .shopItem p {
+      margin: 8px 0 12px;
+      font-size: 14px;
+      max-width: none;
+    }
+
+    .levelBar {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+
+    .levelDot {
+      height: 8px;
+      flex: 1;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .levelDot.on {
+      background: linear-gradient(90deg, #72d7ff, #ffd54a);
+    }
+
+    .costLine {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .buyBtn[disabled] {
+      opacity: 0.5;
+      cursor: default;
+      transform: none;
+    }
+
+    .raceSummary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .summaryBox {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 12px;
+    }
+
+    .summaryBox strong {
+      display: block;
+      font-size: 21px;
+      margin-top: 4px;
+      color: var(--text);
+    }
+
+    .summaryBox span {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
     @media (max-width: 920px), (pointer: coarse) {
       .hud {
-        inset: 10px 10px auto 10px;
+        inset: max(10px, env(safe-area-inset-top)) 10px auto 10px;
         gap: 8px;
       }
+
       .leftCol, .rightCol {
         flex-direction: column;
         gap: 8px;
       }
+
       .panel {
         min-width: 0;
         padding: 10px 12px;
       }
+
       .help {
         min-width: 0;
         font-size: 12px;
       }
-      .mobileControls { display: flex; }
+
+      .card {
+        padding: 22px 18px;
+        border-radius: 24px;
+      }
+
+      .mobileControls {
+        display: flex;
+      }
+
+      .mobileHint {
+        display: block;
+      }
+
+      .shopGrid {
+        grid-template-columns: 1fr;
+      }
+
+      .raceSummary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px), (pointer: coarse) {
+      .hud {
+        inset: max(8px, env(safe-area-inset-top)) 8px auto 8px;
+      }
+
+      .panel {
+        padding: 8px 10px;
+      }
+
+      .panel h1 {
+        font-size: 12px;
+      }
+
+      .stat {
+        font-size: 12px;
+      }
+
+      .controlCluster {
+        grid-template-columns: repeat(3, 78px);
+        grid-template-rows: repeat(2, 78px);
+      }
+
+      .touchBtn {
+        font-size: 28px;
+      }
+
+      .raceSummary {
+        grid-template-columns: 1fr 1fr;
+      }
     }
   </style>
 </head>
@@ -273,18 +455,19 @@
         <div class="stat"><span>Tiempo</span><span id="timeStat">00:00.0</span></div>
       </div>
       <div class="panel">
-        <h1>Pista</h1>
+        <h1>Progreso</h1>
         <div class="stat"><span>Mapa</span><span id="mapStat">—</span></div>
         <div class="stat"><span>Dificultad</span><span id="diffStat">Normal</span></div>
-        <div class="stat"><span>Estado</span><span id="statusStat">Listo</span></div>
+        <div class="stat"><span>Puntos</span><span id="creditsStat">0</span></div>
+        <div class="stat"><span>Carrera</span><span id="raceStat">1</span></div>
       </div>
     </div>
     <div class="rightCol">
       <div class="panel help">
-        <div><strong>Ratón</strong>: el coche gira hacia el cursor</div>
+        <div><strong>Ordenador</strong>: ratón para dirigir</div>
         <div><strong>Clic izq</strong>: acelerar · <strong>clic der</strong>: frenar</div>
-        <div><strong>WASD/Flechas</strong> y botones táctiles también funcionan</div>
-        <div><strong>R</strong>: reiniciar · 3 vueltas para ganar</div>
+        <div><strong>Móvil</strong>: botones táctiles para girar, acelerar y frenar</div>
+        <div><strong>R</strong>: reiniciar carrera actual</div>
       </div>
     </div>
   </div>
@@ -307,23 +490,7 @@
   </div>
 
   <div class="overlay" id="overlay">
-    <div class="card">
-      <div class="eyebrow" id="cardEyebrow">Arcade Racing</div>
-      <h2 id="cardTitle">DRIFT CROWN</h2>
-      <p id="cardText1">Carreras top down con control por ratón y giro clásico. El coche ahora gira de forma limpia y estable, sin derrape.</p>
-      <p id="cardText2">Cada vez que se carga el juego aparece un mapa distinto al azar. La dificultad cambia la velocidad y agresividad de la IA.</p>
-      <div class="difficultyLabel">Elige dificultad</div>
-      <div class="difficultyRow">
-        <button class="diffBtn" data-difficulty="easy">Fácil</button>
-        <button class="diffBtn active" data-difficulty="normal">Normal</button>
-        <button class="diffBtn" data-difficulty="hard">Difícil</button>
-      </div>
-      <div class="mapTag" id="mapTag">Mapa aleatorio</div>
-      <div class="btnRow">
-        <button class="primary" id="startBtn">Empezar carrera</button>
-        <button id="newMapBtn">Otro mapa</button>
-      </div>
-    </div>
+    <div class="card" id="overlayCard"></div>
   </div>
 
   <script>
@@ -336,47 +503,62 @@
     const timeStat = document.getElementById('timeStat');
     const mapStat = document.getElementById('mapStat');
     const diffStat = document.getElementById('diffStat');
-    const statusStat = document.getElementById('statusStat');
+    const creditsStat = document.getElementById('creditsStat');
+    const raceStat = document.getElementById('raceStat');
 
     const overlay = document.getElementById('overlay');
+    const overlayCard = document.getElementById('overlayCard');
     const countdownEl = document.getElementById('countdown');
-    const cardEyebrow = document.getElementById('cardEyebrow');
-    const cardTitle = document.getElementById('cardTitle');
-    const cardText1 = document.getElementById('cardText1');
-    const cardText2 = document.getElementById('cardText2');
-    const mapTag = document.getElementById('mapTag');
-    const startBtn = document.getElementById('startBtn');
-    const newMapBtn = document.getElementById('newMapBtn');
-    const diffBtns = [...document.querySelectorAll('.diffBtn')];
 
     let W = canvas.width = window.innerWidth;
     let H = canvas.height = window.innerHeight;
-    let lastFrameTime = 0;
     let startTime = 0;
     let elapsed = 0;
     let raceToken = 0;
+    let animationFrame = 0;
 
-    const state = {
-      mode: 'menu',
-      difficulty: 'normal'
-    };
-
-    const keys = { up: false, down: false, left: false, right: false, gas: false, brake: false };
-    const mouse = { x: W * 0.5, y: H * 0.5, left: false, right: false, active: true };
+    const keys = { up:false, down:false, left:false, right:false, gas:false, brake:false };
+    const mouse = { x: W * 0.5, y: H * 0.5, left:false, right:false, active:true };
 
     const difficultySettings = {
-      easy:   { label: 'Fácil', aiSpeed: 0.94, aiAccel: 0.96, aiTurn: 0.96, aiLookAhead: 0.11, aiPush: 0.84 },
-      normal: { label: 'Normal', aiSpeed: 1.14, aiAccel: 1.10, aiTurn: 1.12, aiLookAhead: 0.16, aiPush: 0.97 },
-      hard:   { label: 'Difícil', aiSpeed: 1.42, aiAccel: 1.30, aiTurn: 1.30, aiLookAhead: 0.24, aiPush: 1.12 }
+      easy:   { label:'Fácil', aiSpeed:0.94, aiAccel:0.96, aiTurn:0.96, aiLookAhead:0.11, aiPush:0.84, reward:0.9 },
+      normal: { label:'Normal', aiSpeed:1.14, aiAccel:1.10, aiTurn:1.12, aiLookAhead:0.16, aiPush:0.97, reward:1.2 },
+      hard:   { label:'Difícil', aiSpeed:1.42, aiAccel:1.30, aiTurn:1.30, aiLookAhead:0.24, aiPush:1.12, reward:1.6 }
     };
 
     const maps = [
-      { name: 'Sunset Speedway', theme: 'sunset', outerScaleX: 0.37, outerScaleY: 0.28, innerRatioX: 0.64, innerRatioY: 0.53, laneCurve: 0.60, scenery: 'palms' },
-      { name: 'Neon Harbor', theme: 'neon', outerScaleX: 0.34, outerScaleY: 0.31, innerRatioX: 0.58, innerRatioY: 0.47, laneCurve: 0.52, scenery: 'lights' },
-      { name: 'Emerald Circuit', theme: 'forest', outerScaleX: 0.39, outerScaleY: 0.25, innerRatioX: 0.67, innerRatioY: 0.50, laneCurve: 0.62, scenery: 'trees' },
-      { name: 'Dust Bowl Ring', theme: 'desert', outerScaleX: 0.36, outerScaleY: 0.27, innerRatioX: 0.60, innerRatioY: 0.48, laneCurve: 0.56, scenery: 'rocks' }
+      { name:'Sunset Speedway', theme:'sunset', outerScaleX:0.37, outerScaleY:0.28, innerRatioX:0.64, innerRatioY:0.53, laneCurve:0.60, scenery:'palms' },
+      { name:'Neon Harbor', theme:'neon', outerScaleX:0.34, outerScaleY:0.31, innerRatioX:0.58, innerRatioY:0.47, laneCurve:0.52, scenery:'lights' },
+      { name:'Emerald Circuit', theme:'forest', outerScaleX:0.39, outerScaleY:0.25, innerRatioX:0.67, innerRatioY:0.50, laneCurve:0.62, scenery:'trees' },
+      { name:'Dust Bowl Ring', theme:'desert', outerScaleX:0.36, outerScaleY:0.27, innerRatioX:0.60, innerRatioY:0.48, laneCurve:0.56, scenery:'rocks' }
     ];
 
+    const upgradeDefs = [
+      { id:'engine', title:'Motor', desc:'+ aceleración y un poco de velocidad punta', baseCost:55, max:6 },
+      { id:'handling', title:'Dirección', desc:'+ giro y respuesta del coche', baseCost:50, max:6 },
+      { id:'topSpeed', title:'Turbo', desc:'+ velocidad máxima', baseCost:70, max:6 },
+      { id:'recovery', title:'Suspensión', desc:'+ menos castigo al salir del asfalto', baseCost:60, max:6 }
+    ];
+
+    const state = {
+      mode: 'menu',
+      difficulty: 'normal',
+      currentMapIndex: Math.floor(Math.random() * maps.length),
+      result: null
+    };
+
+    const session = {
+      credits: 0,
+      raceNumber: 1,
+      upgrades: {
+        engine: 0,
+        handling: 0,
+        topSpeed: 0,
+        recovery: 0
+      }
+    };
+
+    const particles = [];
     const track = {
       cx: 0,
       cy: 0,
@@ -386,41 +568,31 @@
       innerB: 0,
       laneMidA: 0,
       laneMidB: 0,
-      map: maps[Math.floor(Math.random() * maps.length)]
+      map: maps[state.currentMapIndex]
     };
-
-    const particles = [];
-    const playerColor = '#4ad0ff';
-    const rivalColors = ['#ff6b6b', '#9bff6f', '#ffd54a'];
 
     let player = null;
     let rivals = [];
     let cars = [];
 
-    function clamp(v, min, max) {
-      return Math.max(min, Math.min(max, v));
-    }
-
-    function lerp(a, b, t) {
-      return a + (b - a) * t;
-    }
-
-    function rand(min, max) {
-      return min + Math.random() * (max - min);
-    }
+    function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function rand(min, max) { return min + Math.random() * (max - min); }
 
     function chooseRandomMap() {
-      track.map = maps[Math.floor(Math.random() * maps.length)];
+      const current = state.currentMapIndex;
+      let next = current;
+      while (maps.length > 1 && next === current) {
+        next = Math.floor(Math.random() * maps.length);
+      }
+      state.currentMapIndex = next;
+      track.map = maps[next];
       buildTrack();
-      updateMapLabels();
-    }
-
-    function updateMapLabels() {
-      mapStat.textContent = track.map.name;
-      mapTag.textContent = 'Mapa: ' + track.map.name;
+      updateHUD();
     }
 
     function buildTrack() {
+      track.map = maps[state.currentMapIndex];
       track.cx = W / 2;
       track.cy = H / 2 + Math.min(20, H * 0.02);
       track.outerA = Math.max(220, W * track.map.outerScaleX);
@@ -429,13 +601,6 @@
       track.innerB = track.outerB * track.map.innerRatioY;
       track.laneMidA = (track.outerA + track.innerA) * 0.5;
       track.laneMidB = (track.outerB + track.innerB) * 0.5;
-    }
-
-    function resize() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-      buildTrack();
-      resetCars();
     }
 
     function angleToProgress(angle) {
@@ -466,14 +631,37 @@
       return Math.atan2(dy, dx);
     }
 
+    function getUpgradeLevel(id) {
+      return session.upgrades[id] || 0;
+    }
+
+    function getUpgradeCost(id) {
+      const def = upgradeDefs.find(u => u.id === id);
+      const level = getUpgradeLevel(id);
+      return Math.round(def.baseCost * (1 + level * 0.55));
+    }
+
+    function buyUpgrade(id) {
+      const def = upgradeDefs.find(u => u.id === id);
+      const level = getUpgradeLevel(id);
+      if (level >= def.max) return;
+      const cost = getUpgradeCost(id);
+      if (session.credits < cost) return;
+      session.credits -= cost;
+      session.upgrades[id] += 1;
+      updateHUD();
+      if (state.mode === 'shop') renderShop();
+    }
+
     function createCar({ angle, laneOffset, color, ai = false, skill = 1 }) {
       const p = pointOnMid(angle, laneOffset);
       const diff = difficultySettings[state.difficulty];
-      const heading = tangentAngleOnEllipse(
-        angle,
-        track.laneMidA + laneOffset,
-        track.laneMidB + laneOffset * track.map.laneCurve
-      );
+      const heading = tangentAngleOnEllipse(angle, track.laneMidA + laneOffset, track.laneMidB + laneOffset * track.map.laneCurve);
+
+      const engineLv = getUpgradeLevel('engine');
+      const handlingLv = getUpgradeLevel('handling');
+      const topSpeedLv = getUpgradeLevel('topSpeed');
+      const recoveryLv = getUpgradeLevel('recovery');
 
       return {
         x: p.x,
@@ -483,12 +671,12 @@
         angle: heading,
         steer: 0,
         speed: 0,
-        maxSpeed: ai ? (4.15 + skill * 0.32) * diff.aiSpeed : 4.82,
-        accel: ai ? (0.086 + skill * 0.007) * diff.aiAccel : 0.105,
-        brake: ai ? 0.085 : 0.13,
-        turnRate: ai ? 0.029 * diff.aiTurn : 0.033,
-        drag: ai ? 0.987 : 0.986,
-        offDrag: ai ? 0.88 : 0.84,
+        maxSpeed: ai ? (4.15 + skill * 0.32) * diff.aiSpeed : 4.82 + topSpeedLv * 0.22,
+        accel: ai ? (0.086 + skill * 0.007) * diff.aiAccel : 0.105 + engineLv * 0.010,
+        brake: ai ? 0.085 : 0.13 + recoveryLv * 0.005,
+        turnRate: ai ? 0.029 * diff.aiTurn : 0.033 + handlingLv * 0.003,
+        drag: ai ? 0.987 : Math.min(0.991, 0.986 + topSpeedLv * 0.001),
+        offDrag: ai ? 0.88 : Math.min(0.95, 0.84 + recoveryLv * 0.015),
         color,
         ai,
         skill,
@@ -499,16 +687,23 @@
     }
 
     function resetCars() {
-      player = createCar({ angle: -Math.PI / 2 + 0.03, laneOffset: -22, color: playerColor, ai: false });
+      player = createCar({ angle: -Math.PI / 2 + 0.03, laneOffset: -22, color: '#4ad0ff', ai: false });
       rivals = [
-        createCar({ angle: -Math.PI / 2 - 0.08, laneOffset: 8, color: rivalColors[0], ai: true, skill: 1.00 }),
-        createCar({ angle: -Math.PI / 2 - 0.16, laneOffset: -42, color: rivalColors[1], ai: true, skill: 1.12 }),
-        createCar({ angle: -Math.PI / 2 - 0.24, laneOffset: 34, color: rivalColors[2], ai: true, skill: 1.22 })
+        createCar({ angle: -Math.PI / 2 - 0.08, laneOffset: 8, color: '#ff6b6b', ai: true, skill: 1.00 }),
+        createCar({ angle: -Math.PI / 2 - 0.16, laneOffset: -42, color: '#9bff6f', ai: true, skill: 1.12 }),
+        createCar({ angle: -Math.PI / 2 - 0.24, laneOffset: 34, color: '#ffd54a', ai: true, skill: 1.22 })
       ];
       cars = [player, ...rivals];
       particles.length = 0;
       elapsed = 0;
       updateHUD();
+    }
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      buildTrack();
+      resetCars();
     }
 
     function trackFieldValue(x, y) {
@@ -528,27 +723,28 @@
     function movePlayer(car) {
       const accelerating = keys.up || keys.gas || mouse.left;
       const braking = keys.down || keys.brake || mouse.right;
-
       let steerInput = 0;
+      const usingTouchSteering = keys.left || keys.right;
 
-      if (mouse.active) {
-        const desiredAngle = Math.atan2(mouse.y - car.y, mouse.x - car.x);
+      if (mouse.active && !usingTouchSteering) {
+        const dx = mouse.x - car.x;
+        const dy = mouse.y - car.y;
+        const desiredAngle = Math.atan2(dy, dx);
         const diff = normalizeAngle(desiredAngle - car.angle);
         steerInput = clamp(diff / 0.9, -1, 1);
       }
 
-      if (keys.left) steerInput -= 0.45;
-      if (keys.right) steerInput += 0.45;
+      if (keys.left) steerInput -= 1;
+      if (keys.right) steerInput += 1;
       steerInput = clamp(steerInput, -1, 1);
 
-      const speedFactor = clamp(Math.abs(car.speed) / 2.0, 0.22, 1);
-      car.steer = lerp(car.steer, steerInput, 0.22);
-      car.angle += car.steer * car.turnRate * 1.25 * speedFactor;
+      const speedFactor = clamp(Math.abs(car.speed) / 2.4, 0.18, 1);
+      car.steer = lerp(car.steer, steerInput, usingTouchSteering ? 0.26 : 0.18);
+      car.angle += car.steer * car.turnRate * speedFactor;
 
       if (accelerating) car.speed += car.accel;
       if (braking) car.speed -= car.brake;
       if (!accelerating && !braking) car.speed *= 0.985;
-
       car.speed = clamp(car.speed, -1.0, car.maxSpeed);
     }
 
@@ -575,7 +771,6 @@
 
       if (car.speed < targetSpeed) car.speed += car.accel;
       else car.speed *= 0.992;
-
       car.speed = clamp(car.speed, 0, car.maxSpeed);
     }
 
@@ -596,7 +791,6 @@
     function constrainCarToTrack(car) {
       const road = trackFieldValue(car.x, car.y);
       if (road.onRoad) return;
-
       const angle = nearestAngleOnTrack(car.x, car.y);
 
       if (road.inner < 1) {
@@ -646,29 +840,25 @@
       return ranking.indexOf(player) + 1;
     }
 
-    function updateHUD() {
-      if (!player) return;
-
-      speedStat.textContent = Math.round(Math.abs(player.speed) * 74) + ' km/h';
-      lapStat.textContent = Math.min(player.laps, 3) + ' / 3';
-
-      const ranking = [...cars].sort((a, b) => rankingValue(b) - rankingValue(a));
-      posStat.textContent = (ranking.indexOf(player) + 1) + ' / ' + cars.length;
-      timeStat.textContent = formatTime(elapsed);
-      diffStat.textContent = difficultySettings[state.difficulty].label;
-
-      if (state.mode === 'menu') statusStat.textContent = 'Listo';
-      else if (state.mode === 'countdown') statusStat.textContent = 'Cuenta atrás';
-      else if (state.mode === 'running') statusStat.textContent = 'Corriendo';
-      else if (state.mode === 'finished') statusStat.textContent = 'Meta';
-    }
-
     function formatTime(ms) {
       const totalSeconds = ms / 1000;
       const minutes = Math.floor(totalSeconds / 60);
       const seconds = Math.floor(totalSeconds % 60);
       const tenths = Math.floor((totalSeconds % 1) * 10);
       return String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0') + '.' + tenths;
+    }
+
+    function updateHUD() {
+      if (!player) return;
+      speedStat.textContent = Math.round(Math.abs(player.speed) * 74) + ' km/h';
+      lapStat.textContent = Math.min(player.laps, 3) + ' / 3';
+      const ranking = [...cars].sort((a, b) => rankingValue(b) - rankingValue(a));
+      posStat.textContent = (ranking.indexOf(player) + 1) + ' / ' + cars.length;
+      timeStat.textContent = formatTime(elapsed);
+      mapStat.textContent = track.map.name;
+      diffStat.textContent = difficultySettings[state.difficulty].label;
+      creditsStat.textContent = session.credits;
+      raceStat.textContent = session.raceNumber;
     }
 
     function spawnDust(car) {
@@ -678,8 +868,7 @@
         vx: rand(-0.8, 0.8),
         vy: rand(-0.8, 0.8),
         life: rand(12, 20),
-        size: rand(3, 6),
-        type: 'dust'
+        size: rand(3, 6)
       });
     }
 
@@ -722,7 +911,6 @@
 
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, W, H);
-
       drawScenery();
       drawTrack();
       drawParticles();
@@ -730,7 +918,6 @@
 
     function drawScenery() {
       const s = track.map.scenery;
-
       for (let i = 0; i < 48; i++) {
         const ang = (i / 48) * Math.PI * 2;
         const ringA = track.outerA + 56 + (i % 5) * 10;
@@ -816,6 +1003,16 @@
       ctx.restore();
     }
 
+    function roundRectPath(x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
     function drawParticles() {
       for (const p of particles) {
         ctx.globalAlpha = Math.max(0, p.life / 24);
@@ -825,16 +1022,6 @@
         ctx.fill();
       }
       ctx.globalAlpha = 1;
-    }
-
-    function roundRectPath(x, y, w, h, r) {
-      ctx.beginPath();
-      ctx.moveTo(x + r, y);
-      ctx.arcTo(x + w, y, x + w, y + h, r);
-      ctx.arcTo(x + w, y + h, x, y + h, r);
-      ctx.arcTo(x, y + h, x, y, r);
-      ctx.arcTo(x, y, x + w, y, r);
-      ctx.closePath();
     }
 
     function drawCar(car) {
@@ -888,13 +1075,11 @@
 
     function drawCursorGuide() {
       if (!mouse.active || overlay.style.display !== 'none') return;
-
       ctx.strokeStyle = 'rgba(255,255,255,0.16)';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.arc(mouse.x, mouse.y, 12, 0, Math.PI * 2);
       ctx.stroke();
-
       ctx.beginPath();
       ctx.moveTo(mouse.x - 16, mouse.y);
       ctx.lineTo(mouse.x + 16, mouse.y);
@@ -905,17 +1090,14 @@
 
     function drawArrowToLeader() {
       if (!player || state.mode !== 'running') return;
-
       const ranking = [...cars].sort((a, b) => rankingValue(b) - rankingValue(a));
       if (ranking[0] === player) return;
-
       const leader = ranking[0];
       const dx = leader.x - player.x;
       const dy = leader.y - player.y;
       const ang = Math.atan2(dy, dx);
       const x = W - 88;
       const y = H - 90;
-
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(ang + Math.PI / 2);
@@ -939,27 +1121,138 @@
       drawCursorGuide();
     }
 
-    function loop(ts) {
-      if (!lastFrameTime) lastFrameTime = ts;
-      lastFrameTime = ts;
+    function computeReward(position) {
+      const baseByPosition = [100, 65, 40, 20];
+      const placement = baseByPosition[position - 1] || 15;
+      const difficultyMultiplier = difficultySettings[state.difficulty].reward;
+      const raceBonus = Math.min(60, (session.raceNumber - 1) * 4);
+      return Math.round((placement + raceBonus) * difficultyMultiplier);
+    }
 
-      if (state.mode === 'running') {
-        elapsed = ts - startTime;
-        movePlayer(player);
-        for (const rival of rivals) moveAI(rival);
-        for (const car of cars) updateCarPhysics(car);
-        updateHUD();
-      }
+    function finishRace() {
+      state.mode = 'finished';
+      const pos = rankingPosition();
+      const earned = computeReward(pos);
+      session.credits += earned;
+      state.result = { position: pos, earned, time: elapsed };
+      updateHUD();
+      showShop();
+    }
 
-      updateParticles();
-      render();
-      requestAnimationFrame(loop);
+    function renderMenu() {
+      overlay.style.display = 'flex';
+      overlayCard.innerHTML = `
+        <div class="eyebrow">Arcade Racing</div>
+        <h2>DRIFT CROWN</h2>
+        <p>Carreras top down con control por ratón y ahora con progreso entre carreras. Ganas puntos al terminar cada carrera y luego entras en una tienda para mejorar tu coche antes de la siguiente.</p>
+        <p>La dificultad cambia la velocidad, la trazada y la presión de la IA. El mapa se elige al azar en cada nueva carrera.</p>
+        <div class="difficultyLabel">Elige dificultad</div>
+        <div class="difficultyRow">
+          <button class="diffBtn ${state.difficulty === 'easy' ? 'active' : ''}" data-difficulty="easy">Fácil</button>
+          <button class="diffBtn ${state.difficulty === 'normal' ? 'active' : ''}" data-difficulty="normal">Normal</button>
+          <button class="diffBtn ${state.difficulty === 'hard' ? 'active' : ''}" data-difficulty="hard">Difícil</button>
+        </div>
+        <div class="shopHeader">
+          <div class="sessionTag">Mapa: ${track.map.name}</div>
+          <div class="sessionTag gold">Puntos: ${session.credits}</div>
+          <div class="sessionTag">Carrera ${session.raceNumber}</div>
+        </div>
+        <div class="mobileHint">En móvil usa los botones táctiles: izquierda para girar y derecha para acelerar o frenar.</div>
+        <div class="btnRow">
+          <button class="primary" id="startRaceBtn">Empezar carrera</button>
+          <button id="changeMapBtn">Otro mapa</button>
+        </div>
+      `;
+
+      overlayCard.querySelectorAll('[data-difficulty]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.difficulty = btn.dataset.difficulty;
+          updateHUD();
+          renderMenu();
+        });
+      });
+
+      overlayCard.querySelector('#startRaceBtn').addEventListener('click', startRace);
+      overlayCard.querySelector('#changeMapBtn').addEventListener('click', () => {
+        chooseRandomMap();
+        resetCars();
+        renderMenu();
+      });
+    }
+
+    function renderShop() {
+      const result = state.result;
+      overlay.style.display = 'flex';
+
+      const itemsHtml = upgradeDefs.map(def => {
+        const level = getUpgradeLevel(def.id);
+        const maxed = level >= def.max;
+        const cost = maxed ? 'MAX' : getUpgradeCost(def.id);
+        const canBuy = !maxed && session.credits >= getUpgradeCost(def.id);
+        const dots = Array.from({ length: def.max }, (_, i) => `<div class="levelDot ${i < level ? 'on' : ''}"></div>`).join('');
+        return `
+          <div class="shopItem">
+            <div class="shopItemTop">
+              <div>
+                <h3>${def.title}</h3>
+                <small>Nivel ${level} / ${def.max}</small>
+              </div>
+              <small>${maxed ? 'Mejora completa' : 'Siguiente: ' + cost + ' pts'}</small>
+            </div>
+            <p>${def.desc}</p>
+            <div class="levelBar">${dots}</div>
+            <div class="costLine">
+              <span>${maxed ? 'Máximo alcanzado' : 'Coste: ' + cost + ' pts'}</span>
+              <button class="buyBtn ${canBuy ? 'primary' : ''}" data-upgrade="${def.id}" ${canBuy ? '' : 'disabled'}>${maxed ? 'MAX' : 'Comprar'}</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      overlayCard.innerHTML = `
+        <div class="eyebrow">Tienda</div>
+        <h2>${result.position === 1 ? '¡Victoria!' : 'Carrera terminada'}</h2>
+        <p>Has completado la carrera en <strong>${track.map.name}</strong>. Ahora puedes gastar tus puntos para mejorar el coche antes de la siguiente.</p>
+        <div class="raceSummary">
+          <div class="summaryBox"><span>Posición</span><strong>${result.position} / 4</strong></div>
+          <div class="summaryBox"><span>Tiempo</span><strong>${formatTime(result.time)}</strong></div>
+          <div class="summaryBox"><span>Ganados</span><strong>+${result.earned}</strong></div>
+          <div class="summaryBox"><span>Total</span><strong>${session.credits}</strong></div>
+        </div>
+        <div class="shopGrid">${itemsHtml}</div>
+        <div class="btnRow">
+          <button class="primary" id="nextRaceBtn">Siguiente carrera</button>
+          <button id="backMenuBtn">Volver al menú</button>
+        </div>
+      `;
+
+      overlayCard.querySelectorAll('[data-upgrade]').forEach(btn => {
+        btn.addEventListener('click', () => buyUpgrade(btn.dataset.upgrade));
+      });
+
+      overlayCard.querySelector('#nextRaceBtn').addEventListener('click', () => {
+        session.raceNumber += 1;
+        chooseRandomMap();
+        resetCars();
+        startRace();
+      });
+
+      overlayCard.querySelector('#backMenuBtn').addEventListener('click', () => {
+        chooseRandomMap();
+        resetCars();
+        state.mode = 'menu';
+        renderMenu();
+      });
+    }
+
+    function showShop() {
+      state.mode = 'shop';
+      renderShop();
     }
 
     async function startRace() {
       raceToken += 1;
       const token = raceToken;
-
       resetCars();
       overlay.style.display = 'none';
       state.mode = 'countdown';
@@ -981,38 +1274,18 @@
       updateHUD();
     }
 
-    function finishRace() {
-      state.mode = 'finished';
-      overlay.style.display = 'flex';
-      cardEyebrow.textContent = 'Resultado';
-      cardTitle.textContent = rankingPosition() === 1 ? '¡VICTORIA!' : 'Carrera terminada';
-      cardText1.textContent = 'Has completado las 3 vueltas en ' + track.map.name + '.';
-      cardText2.textContent = 'Posición final: ' + rankingPosition() + ' / ' + cars.length + ' · Tiempo: ' + formatTime(elapsed) + ' · Dificultad: ' + difficultySettings[state.difficulty].label + '.';
-      startBtn.textContent = 'Jugar otra vez';
-      newMapBtn.style.display = 'inline-block';
-      countdownEl.style.display = 'none';
-      updateHUD();
-    }
+    function loop(ts) {
+      if (state.mode === 'running') {
+        elapsed = ts - startTime;
+        movePlayer(player);
+        for (const rival of rivals) moveAI(rival);
+        for (const car of cars) updateCarPhysics(car);
+        updateHUD();
+      }
 
-    function showMenu() {
-      state.mode = 'menu';
-      overlay.style.display = 'flex';
-      countdownEl.style.display = 'none';
-      cardEyebrow.textContent = 'Arcade Racing';
-      cardTitle.textContent = 'DRIFT CROWN';
-      cardText1.textContent = 'Carreras top down con control real por ratón. El coche gira hacia el cursor de forma limpia y estable, sin derrape.';
-      cardText2.textContent = 'Cada vez que se carga el juego aparece un mapa distinto al azar. Ahora la dificultad es más exigente: la IA corre mejor, traza mejor y castiga más los errores.';
-      startBtn.textContent = 'Empezar carrera';
-      newMapBtn.style.display = 'inline-block';
-      updateHUD();
-    }
-
-    function setDifficulty(value) {
-      state.difficulty = value;
-      diffBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.difficulty === value));
-      diffStat.textContent = difficultySettings[value].label;
-      resetCars();
-      updateHUD();
+      updateParticles();
+      render();
+      animationFrame = requestAnimationFrame(loop);
     }
 
     function setKeyFromCode(code, pressed) {
@@ -1025,7 +1298,7 @@
 
     window.addEventListener('keydown', (e) => {
       if (e.code === 'KeyR') {
-        startRace();
+        if (state.mode === 'running' || state.mode === 'countdown') startRace();
         return;
       }
       setKeyFromCode(e.code, true);
@@ -1057,6 +1330,10 @@
       mouse.right = false;
     });
 
+    canvas.addEventListener('touchstart', () => {
+      mouse.active = false;
+    }, { passive: true });
+
     canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 
     function bindTouchButton(el, key) {
@@ -1077,25 +1354,13 @@
     }
 
     document.querySelectorAll('.touchBtn[data-key]').forEach(btn => bindTouchButton(btn, btn.dataset.key));
-
-    diffBtns.forEach(btn => {
-      btn.addEventListener('click', () => setDifficulty(btn.dataset.difficulty));
-    });
-
-    startBtn.addEventListener('click', () => startRace());
-
-    newMapBtn.addEventListener('click', () => {
-      chooseRandomMap();
-      resetCars();
-      showMenu();
-    });
-
     window.addEventListener('resize', resize);
 
-    chooseRandomMap();
-    setDifficulty('normal');
-    showMenu();
-    requestAnimationFrame(loop);
+    buildTrack();
+    resetCars();
+    updateHUD();
+    renderMenu();
+    animationFrame = requestAnimationFrame(loop);
   </script>
 </body>
 </html>
