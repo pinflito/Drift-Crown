@@ -463,10 +463,16 @@
     };
 
     const maps = [
-      { name: 'Sunset Speedway', theme: 'sunset', outerScaleX: 0.37, outerScaleY: 0.28, innerRatioX: 0.64, innerRatioY: 0.53, laneCurve: 0.60, scenery: 'palms' },
-      { name: 'Neon Harbor', theme: 'neon', outerScaleX: 0.34, outerScaleY: 0.31, innerRatioX: 0.58, innerRatioY: 0.47, laneCurve: 0.52, scenery: 'lights' },
-      { name: 'Emerald Circuit', theme: 'forest', outerScaleX: 0.39, outerScaleY: 0.25, innerRatioX: 0.67, innerRatioY: 0.50, laneCurve: 0.62, scenery: 'trees' },
-      { name: 'Dust Bowl Ring', theme: 'desert', outerScaleX: 0.36, outerScaleY: 0.27, innerRatioX: 0.60, innerRatioY: 0.48, laneCurve: 0.56, scenery: 'rocks' }
+      { name: 'Sunset Speedway', theme: 'sunset', outerScaleX: 0.46, outerScaleY: 0.35, innerRatioX: 0.66, innerRatioY: 0.56, laneCurve: 0.62, scenery: 'palms' },
+      { name: 'Neon Harbor', theme: 'neon', outerScaleX: 0.44, outerScaleY: 0.37, innerRatioX: 0.61, innerRatioY: 0.50, laneCurve: 0.56, scenery: 'lights' },
+      { name: 'Emerald Circuit', theme: 'forest', outerScaleX: 0.48, outerScaleY: 0.33, innerRatioX: 0.69, innerRatioY: 0.54, laneCurve: 0.66, scenery: 'trees' },
+      { name: 'Dust Bowl Ring', theme: 'desert', outerScaleX: 0.45, outerScaleY: 0.34, innerRatioX: 0.62, innerRatioY: 0.50, laneCurve: 0.58, scenery: 'rocks' },
+      { name: 'Frostbite Loop', theme: 'neon', outerScaleX: 0.47, outerScaleY: 0.36, innerRatioX: 0.64, innerRatioY: 0.52, laneCurve: 0.60, scenery: 'lights' },
+      { name: 'Canyon Crown', theme: 'desert', outerScaleX: 0.50, outerScaleY: 0.34, innerRatioX: 0.68, innerRatioY: 0.51, laneCurve: 0.64, scenery: 'rocks' },
+      { name: 'Jungle Orbit', theme: 'forest', outerScaleX: 0.49, outerScaleY: 0.35, innerRatioX: 0.65, innerRatioY: 0.53, laneCurve: 0.63, scenery: 'trees' },
+      { name: 'Golden Mirage', theme: 'sunset', outerScaleX: 0.51, outerScaleY: 0.36, innerRatioX: 0.67, innerRatioY: 0.55, laneCurve: 0.65, scenery: 'palms' },
+      { name: 'Midnight Bay', theme: 'neon', outerScaleX: 0.48, outerScaleY: 0.38, innerRatioX: 0.63, innerRatioY: 0.49, laneCurve: 0.57, scenery: 'lights' },
+      { name: 'Verdant Run', theme: 'forest', outerScaleX: 0.52, outerScaleY: 0.34, innerRatioX: 0.70, innerRatioY: 0.55, laneCurve: 0.67, scenery: 'trees' }
     ];
 
     const upgradeDefs = [
@@ -525,8 +531,8 @@
       track.map = maps[state.currentMapIndex];
       track.cx = W / 2;
       track.cy = H / 2 + Math.min(20, H * 0.02);
-      track.outerA = Math.max(220, W * track.map.outerScaleX);
-      track.outerB = Math.max(150, H * track.map.outerScaleY);
+      track.outerA = Math.max(300, W * track.map.outerScaleX);
+      track.outerB = Math.max(210, H * track.map.outerScaleY);
       track.innerA = track.outerA * track.map.innerRatioX;
       track.innerB = track.outerB * track.map.innerRatioY;
       track.laneMidA = (track.outerA + track.innerA) * 0.5;
