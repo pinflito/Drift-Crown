@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Drift Crown</title>
+  <title>Drift Crown GP</title>
   <style>
     :root {
       --panel: rgba(10, 14, 18, 0.82);
@@ -13,10 +13,7 @@
       --accent: #ffd54a;
       --accent2: #72d7ff;
       --shadow: rgba(0,0,0,0.38);
-      --good: #71f0a4;
-      --danger: #ff7f7f;
     }
-
     * { box-sizing: border-box; }
     html, body {
       margin: 0;
@@ -49,7 +46,7 @@
       align-items: flex-start;
     }
     .panel {
-      min-width: 190px;
+      min-width: 200px;
       padding: 12px 14px;
       border-radius: 18px;
       background: var(--panel);
@@ -86,11 +83,11 @@
       align-items: center;
       justify-content: center;
       z-index: 30;
-      background: rgba(5, 7, 10, 0.62);
+      background: rgba(5, 7, 10, 0.64);
       backdrop-filter: blur(7px);
     }
     .card {
-      width: min(96vw, 900px);
+      width: min(96vw, 960px);
       max-height: 92vh;
       overflow: auto;
       padding: 28px;
@@ -115,7 +112,7 @@
     }
     .card p {
       margin: 10px auto;
-      max-width: 680px;
+      max-width: 700px;
       color: var(--muted);
       line-height: 1.55;
       font-size: 15px;
@@ -159,7 +156,7 @@
       cursor: default;
       transform: none !important;
     }
-    .tag, .sessionTag {
+    .tag {
       margin-top: 14px;
       display: inline-block;
       padding: 8px 12px;
@@ -170,10 +167,17 @@
       font-size: 13px;
       font-weight: 700;
     }
-    .sessionTag.gold {
+    .tag.gold {
       background: rgba(255,213,74,0.12);
       border-color: rgba(255,213,74,0.28);
       color: #ffe69a;
+    }
+    .tagRow {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 14px 0 8px;
     }
     .countdown {
       position: fixed;
@@ -233,13 +237,6 @@
       font-size: 13px;
       color: #cfe8ff;
       opacity: 0.92;
-    }
-    .shopHeader {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin: 14px 0 8px;
     }
     .shopGrid {
       display: grid;
@@ -393,7 +390,7 @@
         <div class="stat"><span>Tiempo</span><span id="timeStat">00:00.0</span></div>
       </div>
       <div class="panel">
-        <h1>Progreso</h1>
+        <h1>Gran Premio</h1>
         <div class="stat"><span>Mapa</span><span id="mapStat">—</span></div>
         <div class="stat"><span>Dificultad</span><span id="diffStat">Normal</span></div>
         <div class="stat"><span>Puntos</span><span id="creditsStat">0</span></div>
@@ -457,22 +454,24 @@
     const mouse = { x: W * 0.5, y: H * 0.5, left: false, right: false, active: true };
 
     const difficultySettings = {
-      easy:   { label: 'Fácil', aiSpeed: 0.94, aiAccel: 0.96, aiTurn: 0.96, aiLookAhead: 0.11, aiPush: 0.84, reward: 0.9 },
-      normal: { label: 'Normal', aiSpeed: 1.14, aiAccel: 1.10, aiTurn: 1.12, aiLookAhead: 0.16, aiPush: 0.97, reward: 1.2 },
-      hard:   { label: 'Difícil', aiSpeed: 1.42, aiAccel: 1.30, aiTurn: 1.30, aiLookAhead: 0.24, aiPush: 1.12, reward: 1.6 }
+      easy:   { label: 'Fácil', aiSpeed: 0.96, aiAccel: 0.96, aiTurn: 0.96, aiLookAhead: 0.10, aiPush: 0.85, reward: 0.9 },
+      normal: { label: 'Normal', aiSpeed: 1.16, aiAccel: 1.10, aiTurn: 1.10, aiLookAhead: 0.16, aiPush: 0.98, reward: 1.2 },
+      hard:   { label: 'Difícil', aiSpeed: 1.45, aiAccel: 1.32, aiTurn: 1.30, aiLookAhead: 0.23, aiPush: 1.14, reward: 1.65 }
     };
 
     const maps = [
-      { name: 'Sunset Speedway', theme: 'sunset', outerScaleX: 0.46, outerScaleY: 0.35, innerRatioX: 0.66, innerRatioY: 0.56, laneCurve: 0.62, scenery: 'palms' },
-      { name: 'Neon Harbor', theme: 'neon', outerScaleX: 0.44, outerScaleY: 0.37, innerRatioX: 0.61, innerRatioY: 0.50, laneCurve: 0.56, scenery: 'lights' },
-      { name: 'Emerald Circuit', theme: 'forest', outerScaleX: 0.48, outerScaleY: 0.33, innerRatioX: 0.69, innerRatioY: 0.54, laneCurve: 0.66, scenery: 'trees' },
-      { name: 'Dust Bowl Ring', theme: 'desert', outerScaleX: 0.45, outerScaleY: 0.34, innerRatioX: 0.62, innerRatioY: 0.50, laneCurve: 0.58, scenery: 'rocks' },
-      { name: 'Frostbite Loop', theme: 'neon', outerScaleX: 0.47, outerScaleY: 0.36, innerRatioX: 0.64, innerRatioY: 0.52, laneCurve: 0.60, scenery: 'lights' },
-      { name: 'Canyon Crown', theme: 'desert', outerScaleX: 0.50, outerScaleY: 0.34, innerRatioX: 0.68, innerRatioY: 0.51, laneCurve: 0.64, scenery: 'rocks' },
-      { name: 'Jungle Orbit', theme: 'forest', outerScaleX: 0.49, outerScaleY: 0.35, innerRatioX: 0.65, innerRatioY: 0.53, laneCurve: 0.63, scenery: 'trees' },
-      { name: 'Golden Mirage', theme: 'sunset', outerScaleX: 0.51, outerScaleY: 0.36, innerRatioX: 0.67, innerRatioY: 0.55, laneCurve: 0.65, scenery: 'palms' },
-      { name: 'Midnight Bay', theme: 'neon', outerScaleX: 0.48, outerScaleY: 0.38, innerRatioX: 0.63, innerRatioY: 0.49, laneCurve: 0.57, scenery: 'lights' },
-      { name: 'Verdant Run', theme: 'forest', outerScaleX: 0.52, outerScaleY: 0.34, innerRatioX: 0.70, innerRatioY: 0.55, laneCurve: 0.67, scenery: 'trees' }
+      { name: 'Monarch GP', theme: 'sunset', worldScale: 1.00, innerRatioX: 0.72, innerRatioY: 0.62, laneCurve: 0.68, scenery: 'palms' },
+      { name: 'Midnight Marina GP', theme: 'neon', worldScale: 1.05, innerRatioX: 0.68, innerRatioY: 0.57, laneCurve: 0.62, scenery: 'lights' },
+      { name: 'Emerald Grand Loop', theme: 'forest', worldScale: 1.10, innerRatioX: 0.74, innerRatioY: 0.61, laneCurve: 0.70, scenery: 'trees' },
+      { name: 'Imperial Desert GP', theme: 'desert', worldScale: 1.08, innerRatioX: 0.70, innerRatioY: 0.58, laneCurve: 0.66, scenery: 'rocks' },
+      { name: 'Blue Glacier Circuit', theme: 'neon', worldScale: 1.12, innerRatioX: 0.71, innerRatioY: 0.59, laneCurve: 0.67, scenery: 'lights' },
+      { name: 'Canyon Crown Prix', theme: 'desert', worldScale: 1.18, innerRatioX: 0.75, innerRatioY: 0.60, laneCurve: 0.72, scenery: 'rocks' },
+      { name: 'Jungle Sovereign', theme: 'forest', worldScale: 1.16, innerRatioX: 0.73, innerRatioY: 0.60, laneCurve: 0.69, scenery: 'trees' },
+      { name: 'Golden Mirage GP', theme: 'sunset', worldScale: 1.20, innerRatioX: 0.76, innerRatioY: 0.62, laneCurve: 0.73, scenery: 'palms' },
+      { name: 'Nocturne Ring', theme: 'neon', worldScale: 1.14, innerRatioX: 0.69, innerRatioY: 0.56, laneCurve: 0.64, scenery: 'lights' },
+      { name: 'Verdant Royal Circuit', theme: 'forest', worldScale: 1.24, innerRatioX: 0.77, innerRatioY: 0.63, laneCurve: 0.74, scenery: 'trees' },
+      { name: 'Solar Apex GP', theme: 'sunset', worldScale: 1.26, innerRatioX: 0.78, innerRatioY: 0.64, laneCurve: 0.76, scenery: 'palms' },
+      { name: 'Titan International', theme: 'desert', worldScale: 1.30, innerRatioX: 0.79, innerRatioY: 0.64, laneCurve: 0.77, scenery: 'rocks' }
     ];
 
     const upgradeDefs = [
@@ -495,19 +494,20 @@
       upgrades: { engine: 0, handling: 0, topSpeed: 0, recovery: 0 }
     };
 
-    const particles = [];
     const track = {
       cx: 0,
       cy: 0,
-      outerA: 0,
-      outerB: 0,
-      innerA: 0,
-      innerB: 0,
-      laneMidA: 0,
-      laneMidB: 0,
+      outerA: 1800,
+      outerB: 1100,
+      innerA: 1300,
+      innerB: 700,
+      laneMidA: 1550,
+      laneMidB: 900,
       map: maps[state.currentMapIndex]
     };
 
+    const camera = { x: 0, y: 0, zoom: 0.46 };
+    const particles = [];
     let player = null;
     let rivals = [];
     let cars = [];
@@ -515,6 +515,10 @@
     function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
     function lerp(a, b, t) { return a + (b - a) * t; }
     function rand(min, max) { return min + Math.random() * (max - min); }
+
+    function getBaseZoom() {
+      return (window.innerWidth <= 920 || matchMedia('(pointer: coarse)').matches) ? 0.34 : 0.46;
+    }
 
     function chooseRandomMap() {
       let next = state.currentMapIndex;
@@ -529,14 +533,15 @@
 
     function buildTrack() {
       track.map = maps[state.currentMapIndex];
-      track.cx = W / 2;
-      track.cy = H / 2 + Math.min(20, H * 0.02);
-      track.outerA = Math.max(300, W * track.map.outerScaleX);
-      track.outerB = Math.max(210, H * track.map.outerScaleY);
+      track.cx = 0;
+      track.cy = 0;
+      track.outerA = 1800 * track.map.worldScale;
+      track.outerB = 1080 * track.map.worldScale * 0.86;
       track.innerA = track.outerA * track.map.innerRatioX;
       track.innerB = track.outerB * track.map.innerRatioY;
       track.laneMidA = (track.outerA + track.innerA) * 0.5;
       track.laneMidB = (track.outerB + track.innerB) * 0.5;
+      camera.zoom = getBaseZoom();
     }
 
     function angleToProgress(angle) {
@@ -585,7 +590,6 @@
         track.laneMidA + laneOffset,
         track.laneMidB + laneOffset * track.map.laneCurve
       );
-
       const engineLv = getUpgradeLevel('engine');
       const handlingLv = getUpgradeLevel('handling');
       const topSpeedLv = getUpgradeLevel('topSpeed');
@@ -594,17 +598,17 @@
       return {
         x: p.x,
         y: p.y,
-        w: 20,
-        h: 34,
+        w: 22,
+        h: 38,
         angle: heading,
         steer: 0,
         speed: 0,
-        maxSpeed: ai ? (4.15 + skill * 0.32) * diff.aiSpeed : 4.82 + topSpeedLv * 0.22,
-        accel: ai ? (0.086 + skill * 0.007) * diff.aiAccel : 0.105 + engineLv * 0.010,
-        brake: ai ? 0.085 : 0.13 + recoveryLv * 0.005,
-        turnRate: ai ? 0.029 * diff.aiTurn : 0.033 + handlingLv * 0.003,
-        drag: ai ? 0.987 : Math.min(0.991, 0.986 + topSpeedLv * 0.001),
-        offDrag: ai ? 0.88 : Math.min(0.95, 0.84 + recoveryLv * 0.015),
+        maxSpeed: ai ? (6.0 + skill * 0.42) * diff.aiSpeed : 5.6 + topSpeedLv * 0.28,
+        accel: ai ? (0.11 + skill * 0.01) * diff.aiAccel : 0.115 + engineLv * 0.012,
+        brake: ai ? 0.12 : 0.14 + recoveryLv * 0.006,
+        turnRate: ai ? 0.023 * diff.aiTurn : 0.026 + handlingLv * 0.0026,
+        drag: ai ? 0.992 : Math.min(0.994, 0.990 + topSpeedLv * 0.0006),
+        offDrag: ai ? 0.90 : Math.min(0.96, 0.86 + recoveryLv * 0.016),
         color,
         ai,
         skill,
@@ -615,15 +619,17 @@
     }
 
     function resetCars() {
-      player = createCar({ angle: -Math.PI / 2 + 0.03, laneOffset: -22, color: '#4ad0ff', ai: false });
+      player = createCar({ angle: -Math.PI / 2 + 0.03, laneOffset: -40, color: '#4ad0ff', ai: false });
       rivals = [
-        createCar({ angle: -Math.PI / 2 - 0.08, laneOffset: 8, color: '#ff6b6b', ai: true, skill: 1.00 }),
-        createCar({ angle: -Math.PI / 2 - 0.16, laneOffset: -42, color: '#9bff6f', ai: true, skill: 1.12 }),
-        createCar({ angle: -Math.PI / 2 - 0.24, laneOffset: 34, color: '#ffd54a', ai: true, skill: 1.22 })
+        createCar({ angle: -Math.PI / 2 - 0.08, laneOffset: 20, color: '#ff6b6b', ai: true, skill: 1.00 }),
+        createCar({ angle: -Math.PI / 2 - 0.16, laneOffset: -75, color: '#9bff6f', ai: true, skill: 1.12 }),
+        createCar({ angle: -Math.PI / 2 - 0.24, laneOffset: 85, color: '#ffd54a', ai: true, skill: 1.22 })
       ];
       cars = [player, ...rivals];
       particles.length = 0;
       elapsed = 0;
+      camera.x = player.x;
+      camera.y = player.y;
       updateHUD();
     }
 
@@ -655,9 +661,9 @@
       const usingTouchSteering = keys.left || keys.right;
 
       if (mouse.active && !usingTouchSteering) {
-        const dx = mouse.x - car.x;
-        const dy = mouse.y - car.y;
-        const desiredAngle = Math.atan2(dy, dx);
+        const worldMouseX = camera.x + (mouse.x - W / 2) / camera.zoom;
+        const worldMouseY = camera.y + (mouse.y - H / 2) / camera.zoom;
+        const desiredAngle = Math.atan2(worldMouseY - car.y, worldMouseX - car.x);
         const diff = normalizeAngle(desiredAngle - car.angle);
         steerInput = clamp(diff / 0.9, -1, 1);
       }
@@ -666,39 +672,39 @@
       if (keys.right) steerInput += 1;
       steerInput = clamp(steerInput, -1, 1);
 
-      const speedFactor = clamp(Math.abs(car.speed) / 2.4, 0.18, 1);
-      car.steer = lerp(car.steer, steerInput, usingTouchSteering ? 0.26 : 0.18);
+      const speedFactor = clamp(Math.abs(car.speed) / 2.8, 0.18, 1);
+      car.steer = lerp(car.steer, steerInput, usingTouchSteering ? 0.28 : 0.18);
       car.angle += car.steer * car.turnRate * speedFactor;
 
       if (accelerating) car.speed += car.accel;
       if (braking) car.speed -= car.brake;
-      if (!accelerating && !braking) car.speed *= 0.985;
-      car.speed = clamp(car.speed, -1.0, car.maxSpeed);
+      if (!accelerating && !braking) car.speed *= 0.988;
+      car.speed = clamp(car.speed, -1.2, car.maxSpeed);
     }
 
     function moveAI(car) {
       const diffCfg = difficultySettings[state.difficulty];
       const targetAngle = nearestAngleOnTrack(car.x, car.y);
-      const lookAhead = diffCfg.aiLookAhead + car.skill * 0.018;
+      const lookAhead = diffCfg.aiLookAhead + car.skill * 0.020;
       const targetPoint = pointOnMid(targetAngle + lookAhead, 0);
       const desired = Math.atan2(targetPoint.y - car.y, targetPoint.x - car.x);
       const diff = normalizeAngle(desired - car.angle);
-      const steerDivisor = state.difficulty === 'hard' ? 0.52 : state.difficulty === 'normal' ? 0.64 : 0.78;
+      const steerDivisor = state.difficulty === 'hard' ? 0.50 : state.difficulty === 'normal' ? 0.62 : 0.78;
       const steerInput = clamp(diff / steerDivisor, -1, 1);
 
-      car.steer = lerp(car.steer, steerInput, state.difficulty === 'hard' ? 0.26 : state.difficulty === 'normal' ? 0.20 : 0.15);
-      const speedFactor = clamp(Math.abs(car.speed) / 2.1, 0.22, 1);
+      car.steer = lerp(car.steer, steerInput, state.difficulty === 'hard' ? 0.27 : state.difficulty === 'normal' ? 0.21 : 0.15);
+      const speedFactor = clamp(Math.abs(car.speed) / 2.6, 0.22, 1);
       car.angle += car.steer * car.turnRate * speedFactor;
 
       const road = trackFieldValue(car.x, car.y);
-      const difficultyBonus = state.difficulty === 'hard' ? 0.05 : state.difficulty === 'normal' ? 0.025 : 0;
+      const difficultyBonus = state.difficulty === 'hard' ? 0.06 : state.difficulty === 'normal' ? 0.03 : 0;
       const basePush = diffCfg.aiPush + difficultyBonus + Math.sin(performance.now() * 0.0012 + car.skill) * 0.012;
       const targetSpeed = road.onRoad
-        ? car.maxSpeed * clamp(basePush, 0.72, state.difficulty === 'hard' ? 1.16 : state.difficulty === 'normal' ? 1.08 : 0.96)
-        : car.maxSpeed * 0.36;
+        ? car.maxSpeed * clamp(basePush, 0.74, state.difficulty === 'hard' ? 1.18 : state.difficulty === 'normal' ? 1.10 : 0.98)
+        : car.maxSpeed * 0.38;
 
       if (car.speed < targetSpeed) car.speed += car.accel;
-      else car.speed *= 0.992;
+      else car.speed *= 0.993;
       car.speed = clamp(car.speed, 0, car.maxSpeed);
     }
 
@@ -723,20 +729,19 @@
 
       if (road.inner < 1) {
         const p = {
-          x: track.cx + Math.cos(angle) * (track.innerA + 12),
-          y: track.cy + Math.sin(angle) * (track.innerB + 12)
+          x: track.cx + Math.cos(angle) * (track.innerA + 18),
+          y: track.cy + Math.sin(angle) * (track.innerB + 18)
         };
-        car.x = lerp(car.x, p.x, 0.18);
-        car.y = lerp(car.y, p.y, 0.18);
+        car.x = lerp(car.x, p.x, 0.16);
+        car.y = lerp(car.y, p.y, 0.16);
       }
-
       if (road.outer > 1) {
         const p = {
-          x: track.cx + Math.cos(angle) * (track.outerA - 12),
-          y: track.cy + Math.sin(angle) * (track.outerB - 12)
+          x: track.cx + Math.cos(angle) * (track.outerA - 18),
+          y: track.cy + Math.sin(angle) * (track.outerB - 18)
         };
-        car.x = lerp(car.x, p.x, 0.18);
-        car.y = lerp(car.y, p.y, 0.18);
+        car.x = lerp(car.x, p.x, 0.16);
+        car.y = lerp(car.y, p.y, 0.16);
       }
     }
 
@@ -750,11 +755,9 @@
           finishRace();
         }
       }
-
       if (car.lastProgress < 0.15 && prog > 0.85 && car.laps > 0) {
         car.laps -= 1;
       }
-
       car.lastProgress = prog;
       car.progress = prog;
     }
@@ -772,7 +775,7 @@
       const baseByPosition = [100, 65, 40, 20];
       const placement = baseByPosition[position - 1] || 15;
       const diffMult = difficultySettings[state.difficulty].reward;
-      const raceBonus = Math.min(60, (session.raceNumber - 1) * 4);
+      const raceBonus = Math.min(70, (session.raceNumber - 1) * 5);
       return Math.round((placement + raceBonus) * diffMult);
     }
 
@@ -786,7 +789,7 @@
 
     function updateHUD() {
       if (!player) return;
-      speedStat.textContent = Math.round(Math.abs(player.speed) * 74) + ' km/h';
+      speedStat.textContent = Math.round(Math.abs(player.speed) * 86) + ' km/h';
       lapStat.textContent = Math.min(player.laps, 3) + ' / 3';
       const ranking = [...cars].sort((a, b) => rankingValue(b) - rankingValue(a));
       posStat.textContent = (ranking.indexOf(player) + 1) + ' / ' + cars.length;
@@ -799,12 +802,12 @@
 
     function spawnDust(car) {
       particles.push({
-        x: car.x + rand(-7, 7),
-        y: car.y + rand(-7, 7),
-        vx: rand(-0.8, 0.8),
-        vy: rand(-0.8, 0.8),
-        life: rand(12, 20),
-        size: rand(3, 6)
+        x: car.x + rand(-10, 10),
+        y: car.y + rand(-10, 10),
+        vx: rand(-1, 1),
+        vy: rand(-1, 1),
+        life: rand(14, 24),
+        size: rand(4, 7)
       });
     }
 
@@ -819,10 +822,27 @@
       }
     }
 
+    function updateCamera() {
+      if (!player) return;
+      camera.x = lerp(camera.x, player.x, 0.10);
+      camera.y = lerp(camera.y, player.y, 0.10);
+      camera.zoom = lerp(camera.zoom, getBaseZoom(), 0.08);
+    }
+
+    function applyWorldTransform() {
+      ctx.setTransform(
+        camera.zoom,
+        0,
+        0,
+        camera.zoom,
+        W / 2 - camera.x * camera.zoom,
+        H / 2 - camera.y * camera.zoom
+      );
+    }
+
     function drawBackground() {
       const t = track.map.theme;
       let gradient;
-
       if (t === 'sunset') {
         gradient = ctx.createLinearGradient(0, 0, 0, H);
         gradient.addColorStop(0, '#3b234a');
@@ -844,9 +864,11 @@
         gradient.addColorStop(0.4, '#1b4720');
         gradient.addColorStop(1, '#0d2410');
       }
-
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, W, H);
+
+      applyWorldTransform();
       drawScenery();
       drawTrack();
       drawParticles();
@@ -854,34 +876,34 @@
 
     function drawScenery() {
       const s = track.map.scenery;
-      for (let i = 0; i < 48; i++) {
-        const ang = (i / 48) * Math.PI * 2;
-        const ringA = track.outerA + 56 + (i % 5) * 10;
-        const ringB = track.outerB + 54 + (i % 4) * 10;
+      const count = 80;
+      for (let i = 0; i < count; i++) {
+        const ang = (i / count) * Math.PI * 2;
+        const ringA = track.outerA + 180 + (i % 6) * 22;
+        const ringB = track.outerB + 170 + (i % 5) * 24;
         const x = track.cx + Math.cos(ang) * ringA;
         const y = track.cy + Math.sin(ang) * ringB;
-
         if (s === 'lights') {
-          ctx.fillStyle = i % 2 ? 'rgba(114,215,255,0.22)' : 'rgba(255,93,188,0.22)';
+          ctx.fillStyle = i % 2 ? 'rgba(114,215,255,0.24)' : 'rgba(255,93,188,0.24)';
           ctx.beginPath();
-          ctx.arc(x, y, 5 + (i % 3), 0, Math.PI * 2);
+          ctx.arc(x, y, 16 + (i % 3) * 2, 0, Math.PI * 2);
           ctx.fill();
         } else if (s === 'rocks') {
           ctx.fillStyle = 'rgba(65,41,21,0.34)';
           ctx.beginPath();
-          ctx.arc(x, y, 6 + (i % 4), 0, Math.PI * 2);
+          ctx.arc(x, y, 18 + (i % 4) * 2, 0, Math.PI * 2);
           ctx.fill();
         } else if (s === 'palms') {
           ctx.fillStyle = 'rgba(24,69,31,0.5)';
           ctx.beginPath();
-          ctx.arc(x, y, 8, 0, Math.PI * 2);
+          ctx.arc(x, y, 18, 0, Math.PI * 2);
           ctx.fill();
           ctx.fillStyle = 'rgba(88,60,27,0.45)';
-          ctx.fillRect(x - 1.5, y + 3, 3, 9);
+          ctx.fillRect(x - 3, y + 8, 6, 18);
         } else {
           ctx.fillStyle = 'rgba(13,47,16,0.5)';
           ctx.beginPath();
-          ctx.arc(x, y, 7 + (i % 3), 0, Math.PI * 2);
+          ctx.arc(x, y, 18 + (i % 3) * 2, 0, Math.PI * 2);
           ctx.fill();
         }
       }
@@ -892,7 +914,7 @@
       ctx.translate(track.cx, track.cy);
       ctx.fillStyle = 'rgba(255,255,255,0.03)';
       ctx.beginPath();
-      ctx.ellipse(0, 0, track.outerA + 20, track.outerB + 20, 0, 0, Math.PI * 2);
+      ctx.ellipse(0, 0, track.outerA + 40, track.outerB + 40, 0, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.fillStyle = '#2f343b';
@@ -901,14 +923,14 @@
       ctx.fill();
 
       ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 5;
+      ctx.lineWidth = 20;
       ctx.beginPath();
-      ctx.ellipse(0, 0, track.outerA - 2.5, track.outerB - 2.5, 0, 0, Math.PI * 2);
+      ctx.ellipse(0, 0, track.outerA - 10, track.outerB - 10, 0, 0, Math.PI * 2);
       ctx.stroke();
 
       ctx.strokeStyle = 'rgba(255,255,255,0.55)';
-      ctx.setLineDash([18, 18]);
-      ctx.lineWidth = 2.6;
+      ctx.setLineDash([70, 55]);
+      ctx.lineWidth = 7;
       ctx.beginPath();
       ctx.ellipse(0, 0, track.laneMidA, track.laneMidB, 0, 0, Math.PI * 2);
       ctx.stroke();
@@ -916,7 +938,7 @@
 
       if (track.map.theme === 'neon') {
         ctx.shadowColor = 'rgba(114,215,255,0.25)';
-        ctx.shadowBlur = 20;
+        ctx.shadowBlur = 35;
       }
       ctx.fillStyle = track.map.theme === 'desert' ? '#7a6745' : '#296b34';
       if (track.map.theme === 'neon') ctx.fillStyle = '#182126';
@@ -926,8 +948,8 @@
       ctx.shadowBlur = 0;
 
       ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 4;
-      for (let x = -34; x <= 34; x += 22) {
+      ctx.lineWidth = 14;
+      for (let x = -90; x <= 90; x += 45) {
         ctx.beginPath();
         ctx.moveTo(x, -track.outerB);
         ctx.lineTo(x, -track.innerB);
@@ -948,7 +970,7 @@
 
     function drawParticles() {
       for (const p of particles) {
-        ctx.globalAlpha = Math.max(0, p.life / 24);
+        ctx.globalAlpha = Math.max(0, p.life / 28);
         ctx.fillStyle = 'rgba(188,153,99,0.7)';
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
@@ -962,51 +984,51 @@
       ctx.translate(car.x, car.y);
       ctx.rotate(car.angle + Math.PI / 2);
       ctx.shadowColor = 'rgba(0,0,0,0.34)';
-      ctx.shadowBlur = 14;
-      ctx.shadowOffsetY = 7;
+      ctx.shadowBlur = 18;
+      ctx.shadowOffsetY = 9;
 
       ctx.fillStyle = '#0f1115';
-      roundRectPath(-car.w / 2, -car.h / 2, car.w, car.h, 7);
+      roundRectPath(-car.w / 2, -car.h / 2, car.w, car.h, 8);
       ctx.fill();
-
       ctx.shadowColor = 'transparent';
+
       ctx.fillStyle = car.color;
-      roundRectPath(-car.w / 2 + 2, -car.h / 2 + 2, car.w - 4, car.h - 4, 6);
+      roundRectPath(-car.w / 2 + 2, -car.h / 2 + 2, car.w - 4, car.h - 4, 7);
       ctx.fill();
 
-      ctx.fillStyle = 'rgba(255,255,255,0.88)';
-      roundRectPath(-car.w / 2 + 4, -car.h / 2 + 4, car.w - 8, 8, 4);
+      ctx.fillStyle = 'rgba(255,255,255,0.9)';
+      roundRectPath(-car.w / 2 + 4, -car.h / 2 + 5, car.w - 8, 9, 4);
       ctx.fill();
 
       ctx.fillStyle = '#15181d';
-      roundRectPath(-car.w / 2 - 2, -car.h / 2 + 4, 4, 9, 2); ctx.fill();
-      roundRectPath(car.w / 2 - 2, -car.h / 2 + 4, 4, 9, 2); ctx.fill();
-      roundRectPath(-car.w / 2 - 2, car.h / 2 - 13, 4, 9, 2); ctx.fill();
-      roundRectPath(car.w / 2 - 2, car.h / 2 - 13, 4, 9, 2); ctx.fill();
+      roundRectPath(-car.w / 2 - 2, -car.h / 2 + 4, 5, 11, 2); ctx.fill();
+      roundRectPath(car.w / 2 - 3, -car.h / 2 + 4, 5, 11, 2); ctx.fill();
+      roundRectPath(-car.w / 2 - 2, car.h / 2 - 15, 5, 11, 2); ctx.fill();
+      roundRectPath(car.w / 2 - 3, car.h / 2 - 15, 5, 11, 2); ctx.fill();
 
       ctx.fillStyle = '#ffef9b';
-      ctx.fillRect(-car.w / 2 + 3, -car.h / 2 + 1, 4, 3);
-      ctx.fillRect(car.w / 2 - 7, -car.h / 2 + 1, 4, 3);
+      ctx.fillRect(-car.w / 2 + 3, -car.h / 2 + 1, 5, 3);
+      ctx.fillRect(car.w / 2 - 8, -car.h / 2 + 1, 5, 3);
 
       ctx.fillStyle = '#ff6b6b';
-      ctx.fillRect(-car.w / 2 + 3, car.h / 2 - 4, 4, 3);
-      ctx.fillRect(car.w / 2 - 7, car.h / 2 - 4, 4, 3);
+      ctx.fillRect(-car.w / 2 + 3, car.h / 2 - 4, 5, 3);
+      ctx.fillRect(car.w / 2 - 8, car.h / 2 - 4, 5, 3);
 
       if (!car.ai && (mouse.left || keys.up || keys.gas) && Math.abs(car.speed) > 0.2) {
-        ctx.fillStyle = 'rgba(255, 194, 64, 0.68)';
+        ctx.fillStyle = 'rgba(255, 194, 64, 0.72)';
         ctx.beginPath();
         ctx.moveTo(-4, car.h / 2 + 2);
-        ctx.lineTo(0, car.h / 2 + 14 + Math.random() * 6);
+        ctx.lineTo(0, car.h / 2 + 18 + Math.random() * 8);
         ctx.lineTo(4, car.h / 2 + 2);
         ctx.closePath();
         ctx.fill();
       }
-
       ctx.restore();
     }
 
     function drawCursorGuide() {
       if (!mouse.active || overlay.style.display !== 'none') return;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.strokeStyle = 'rgba(255,255,255,0.16)';
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -1030,6 +1052,7 @@
       const ang = Math.atan2(dy, dx);
       const x = W - 88;
       const y = H - 90;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(ang + Math.PI / 2);
@@ -1044,12 +1067,78 @@
       ctx.restore();
     }
 
+    function drawMiniMap() {
+      if (!player) return;
+      const w = 180;
+      const h = 120;
+      const x = W - w - 18;
+      const y = 18;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.fillStyle = 'rgba(10,14,18,0.72)';
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      ctx.lineWidth = 1;
+      roundRectPath(x, y, w, h, 18);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.save();
+      ctx.beginPath();
+      roundRectPath(x, y, w, h, 18);
+      ctx.clip();
+      ctx.translate(x + w / 2, y + h / 2);
+      const scale = Math.min((w - 24) / (track.outerA * 2), (h - 24) / (track.outerB * 2));
+      ctx.scale(scale, scale);
+      ctx.translate(-track.cx, -track.cy);
+
+      ctx.fillStyle = '#2f343b';
+      ctx.beginPath();
+      ctx.ellipse(track.cx, track.cy, track.outerA, track.outerB, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#284f2d';
+      ctx.beginPath();
+      ctx.ellipse(track.cx, track.cy, track.innerA, track.innerB, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      for (const rival of rivals) {
+        ctx.fillStyle = rival.color;
+        ctx.beginPath();
+        ctx.arc(rival.x, rival.y, 18, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.fillStyle = '#4ad0ff';
+      ctx.beginPath();
+      ctx.arc(player.x, player.y, 20, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function updateCamera() {
+      if (!player) return;
+      camera.x = lerp(camera.x, player.x, 0.10);
+      camera.y = lerp(camera.y, player.y, 0.10);
+      camera.zoom = lerp(camera.zoom, getBaseZoom(), 0.08);
+    }
+
+    function applyWorldTransform() {
+      ctx.setTransform(
+        camera.zoom,
+        0,
+        0,
+        camera.zoom,
+        W / 2 - camera.x * camera.zoom,
+        H / 2 - camera.y * camera.zoom
+      );
+    }
+
     function render() {
+      updateCamera();
       drawBackground();
+      applyWorldTransform();
       if (cars.length) {
         for (const car of cars) drawCar(car);
       }
       drawArrowToLeader();
+      drawMiniMap();
       drawCursorGuide();
     }
 
@@ -1070,25 +1159,25 @@
       overlay.style.display = 'flex';
       countdownEl.style.display = 'none';
       overlayCard.innerHTML = `
-        <div class="eyebrow">Arcade Racing</div>
-        <h2>DRIFT CROWN</h2>
-        <p>Carreras top down con control por ratón y progresión entre carreras. Ganas puntos al terminar y los gastas en la tienda para mejorar tu coche.</p>
-        <p>La dificultad cambia la velocidad, la trazada y la presión de la IA. Cada nueva carrera usa un mapa aleatorio.</p>
+        <div class="eyebrow">Grand Prix Arcade</div>
+        <h2>DRIFT CROWN GP</h2>
+        <p>Ahora los circuitos son mucho más grandes, con sensación de gran premio y cámara que sigue al coche. Ganas puntos al terminar y los gastas en la tienda para mejorar tu monoplaza.</p>
+        <p>La dificultad cambia la velocidad, la trazada y la presión de la IA. Cada nueva carrera usa un circuito grande distinto.</p>
         <div class="difficultyLabel">Elige dificultad</div>
         <div class="difficultyRow">
           <button class="diffBtn ${state.difficulty === 'easy' ? 'active' : ''}" data-difficulty="easy">Fácil</button>
           <button class="diffBtn ${state.difficulty === 'normal' ? 'active' : ''}" data-difficulty="normal">Normal</button>
           <button class="diffBtn ${state.difficulty === 'hard' ? 'active' : ''}" data-difficulty="hard">Difícil</button>
         </div>
-        <div class="shopHeader">
-          <div class="sessionTag">Mapa: ${track.map.name}</div>
-          <div class="sessionTag gold">Puntos: ${session.credits}</div>
-          <div class="sessionTag">Carrera ${session.raceNumber}</div>
+        <div class="tagRow">
+          <div class="tag">Circuito: ${track.map.name}</div>
+          <div class="tag gold">Puntos: ${session.credits}</div>
+          <div class="tag">Carrera ${session.raceNumber}</div>
         </div>
         <div class="mobileHint">En móvil usa los botones táctiles: izquierda para girar y derecha para acelerar o frenar.</div>
         <div class="btnRow">
           <button class="primary" id="startRaceBtn">Empezar carrera</button>
-          <button id="changeMapBtn">Otro mapa</button>
+          <button id="changeMapBtn">Otro circuito</button>
         </div>
       `;
 
@@ -1139,7 +1228,7 @@
       overlayCard.innerHTML = `
         <div class="eyebrow">Tienda</div>
         <h2>${result.position === 1 ? '¡Victoria!' : 'Carrera terminada'}</h2>
-        <p>Has terminado en <strong>${track.map.name}</strong>. Gasta tus puntos en mejoras antes de la siguiente carrera.</p>
+        <p>Has terminado en <strong>${track.map.name}</strong>. Gasta tus puntos en mejoras antes del siguiente gran premio.</p>
         <div class="raceSummary">
           <div class="summaryBox"><span>Posición</span><strong>${result.position} / 4</strong></div>
           <div class="summaryBox"><span>Tiempo</span><strong>${formatTime(result.time)}</strong></div>
@@ -1148,7 +1237,7 @@
         </div>
         <div class="shopGrid">${itemsHtml}</div>
         <div class="btnRow">
-          <button class="primary" id="nextRaceBtn">Siguiente carrera</button>
+          <button class="primary" id="nextRaceBtn">Siguiente gran premio</button>
           <button id="menuBtn">Volver al menú</button>
         </div>
       `;
@@ -1274,8 +1363,8 @@
       el.addEventListener('pointercancel', off);
       el.addEventListener('pointerleave', off);
     }
-    document.querySelectorAll('.touchBtn[data-key]').forEach(btn => bindTouchButton(btn, btn.dataset.key));
 
+    document.querySelectorAll('.touchBtn[data-key]').forEach(btn => bindTouchButton(btn, btn.dataset.key));
     window.addEventListener('resize', resize);
 
     buildTrack();
