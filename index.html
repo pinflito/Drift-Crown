@@ -460,18 +460,18 @@
     };
 
     const maps = [
-      { name: 'Monarch GP', theme: 'sunset', worldScale: 1.00, innerRatioX: 0.72, innerRatioY: 0.62, laneCurve: 0.68, scenery: 'palms' },
-      { name: 'Midnight Marina GP', theme: 'neon', worldScale: 1.05, innerRatioX: 0.68, innerRatioY: 0.57, laneCurve: 0.62, scenery: 'lights' },
-      { name: 'Emerald Grand Loop', theme: 'forest', worldScale: 1.10, innerRatioX: 0.74, innerRatioY: 0.61, laneCurve: 0.70, scenery: 'trees' },
-      { name: 'Imperial Desert GP', theme: 'desert', worldScale: 1.08, innerRatioX: 0.70, innerRatioY: 0.58, laneCurve: 0.66, scenery: 'rocks' },
-      { name: 'Blue Glacier Circuit', theme: 'neon', worldScale: 1.12, innerRatioX: 0.71, innerRatioY: 0.59, laneCurve: 0.67, scenery: 'lights' },
-      { name: 'Canyon Crown Prix', theme: 'desert', worldScale: 1.18, innerRatioX: 0.75, innerRatioY: 0.60, laneCurve: 0.72, scenery: 'rocks' },
-      { name: 'Jungle Sovereign', theme: 'forest', worldScale: 1.16, innerRatioX: 0.73, innerRatioY: 0.60, laneCurve: 0.69, scenery: 'trees' },
-      { name: 'Golden Mirage GP', theme: 'sunset', worldScale: 1.20, innerRatioX: 0.76, innerRatioY: 0.62, laneCurve: 0.73, scenery: 'palms' },
-      { name: 'Nocturne Ring', theme: 'neon', worldScale: 1.14, innerRatioX: 0.69, innerRatioY: 0.56, laneCurve: 0.64, scenery: 'lights' },
-      { name: 'Verdant Royal Circuit', theme: 'forest', worldScale: 1.24, innerRatioX: 0.77, innerRatioY: 0.63, laneCurve: 0.74, scenery: 'trees' },
-      { name: 'Solar Apex GP', theme: 'sunset', worldScale: 1.26, innerRatioX: 0.78, innerRatioY: 0.64, laneCurve: 0.76, scenery: 'palms' },
-      { name: 'Titan International', theme: 'desert', worldScale: 1.30, innerRatioX: 0.79, innerRatioY: 0.64, laneCurve: 0.77, scenery: 'rocks' }
+      { name: 'Monarch GP', theme: 'sunset', worldScale: 1.55, innerRatioX: 0.76, innerRatioY: 0.60, laneCurve: 0.70, scenery: 'palms' },
+      { name: 'Midnight Marina GP', theme: 'neon', worldScale: 1.62, innerRatioX: 0.73, innerRatioY: 0.56, laneCurve: 0.64, scenery: 'lights' },
+      { name: 'Emerald Grand Loop', theme: 'forest', worldScale: 1.72, innerRatioX: 0.78, innerRatioY: 0.60, laneCurve: 0.72, scenery: 'trees' },
+      { name: 'Imperial Desert GP', theme: 'desert', worldScale: 1.68, innerRatioX: 0.74, innerRatioY: 0.57, laneCurve: 0.68, scenery: 'rocks' },
+      { name: 'Blue Glacier Circuit', theme: 'neon', worldScale: 1.76, innerRatioX: 0.75, innerRatioY: 0.58, laneCurve: 0.69, scenery: 'lights' },
+      { name: 'Canyon Crown Prix', theme: 'desert', worldScale: 1.88, innerRatioX: 0.80, innerRatioY: 0.59, laneCurve: 0.74, scenery: 'rocks' },
+      { name: 'Jungle Sovereign', theme: 'forest', worldScale: 1.84, innerRatioX: 0.77, innerRatioY: 0.59, laneCurve: 0.71, scenery: 'trees' },
+      { name: 'Golden Mirage GP', theme: 'sunset', worldScale: 1.92, innerRatioX: 0.81, innerRatioY: 0.61, laneCurve: 0.75, scenery: 'palms' },
+      { name: 'Nocturne Ring', theme: 'neon', worldScale: 1.80, innerRatioX: 0.74, innerRatioY: 0.55, laneCurve: 0.66, scenery: 'lights' },
+      { name: 'Verdant Royal Circuit', theme: 'forest', worldScale: 1.96, innerRatioX: 0.82, innerRatioY: 0.62, laneCurve: 0.76, scenery: 'trees' },
+      { name: 'Solar Apex GP', theme: 'sunset', worldScale: 2.02, innerRatioX: 0.83, innerRatioY: 0.63, laneCurve: 0.78, scenery: 'palms' },
+      { name: 'Titan International', theme: 'desert', worldScale: 2.12, innerRatioX: 0.84, innerRatioY: 0.63, laneCurve: 0.79, scenery: 'rocks' }
     ];
 
     const upgradeDefs = [
@@ -517,7 +517,7 @@
     function rand(min, max) { return min + Math.random() * (max - min); }
 
     function getBaseZoom() {
-      return (window.innerWidth <= 920 || matchMedia('(pointer: coarse)').matches) ? 0.34 : 0.46;
+      return (window.innerWidth <= 920 || matchMedia('(pointer: coarse)').matches) ? 0.24 : 0.30;
     }
 
     function chooseRandomMap() {
@@ -535,8 +535,8 @@
       track.map = maps[state.currentMapIndex];
       track.cx = 0;
       track.cy = 0;
-      track.outerA = 1800 * track.map.worldScale;
-      track.outerB = 1080 * track.map.worldScale * 0.86;
+      track.outerA = 2850 * track.map.worldScale;
+      track.outerB = 880 * track.map.worldScale;
       track.innerA = track.outerA * track.map.innerRatioX;
       track.innerB = track.outerB * track.map.innerRatioY;
       track.laneMidA = (track.outerA + track.innerA) * 0.5;
@@ -1161,7 +1161,7 @@
       overlayCard.innerHTML = `
         <div class="eyebrow">Grand Prix Arcade</div>
         <h2>DRIFT CROWN GP</h2>
-        <p>Ahora los circuitos son mucho más grandes, con sensación de gran premio y cámara que sigue al coche. Ganas puntos al terminar y los gastas en la tienda para mejorar tu monoplaza.</p>
+        <p>Ahora los circuitos tienen mucho más recorrido real, con rectas largas y vueltas más extensas, más cercanas a un gran premio. La cámara sigue al coche para que la pista no se sienta simplemente ampliada.</p>
         <p>La dificultad cambia la velocidad, la trazada y la presión de la IA. Cada nueva carrera usa un circuito grande distinto.</p>
         <div class="difficultyLabel">Elige dificultad</div>
         <div class="difficultyRow">
