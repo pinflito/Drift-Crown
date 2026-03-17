@@ -365,9 +365,9 @@
     const mouse = { x: W * 0.5, y: H * 0.5, left: false, right: false, active: true };
 
     const difficultySettings = {
-      easy:   { label: 'Fácil', aiSpeed: 0.86, aiAccel: 0.90, aiTurn: 0.92, aiLookAhead: 0.10, aiPush: 0.74 },
-      normal: { label: 'Normal', aiSpeed: 1.04, aiAccel: 1.03, aiTurn: 1.05, aiLookAhead: 0.13, aiPush: 0.88 },
-      hard:   { label: 'Difícil', aiSpeed: 1.32, aiAccel: 1.24, aiTurn: 1.24, aiLookAhead: 0.20, aiPush: 1.06 }
+      easy:   { label: 'Fácil', aiSpeed: 0.94, aiAccel: 0.96, aiTurn: 0.96, aiLookAhead: 0.11, aiPush: 0.84 },
+      normal: { label: 'Normal', aiSpeed: 1.14, aiAccel: 1.10, aiTurn: 1.12, aiLookAhead: 0.16, aiPush: 0.97 },
+      hard:   { label: 'Difícil', aiSpeed: 1.42, aiAccel: 1.30, aiTurn: 1.30, aiLookAhead: 0.24, aiPush: 1.12 }
     };
 
     const maps = [
@@ -483,12 +483,12 @@
         angle: heading,
         steer: 0,
         speed: 0,
-        maxSpeed: ai ? (4.0 + skill * 0.28) * diff.aiSpeed : 5.0,
-        accel: ai ? (0.080 + skill * 0.006) * diff.aiAccel : 0.11,
-        brake: ai ? 0.08 : 0.13,
-        turnRate: ai ? 0.027 * diff.aiTurn : 0.033,
-        drag: ai ? 0.985 : 0.987,
-        offDrag: ai ? 0.92 : 0.90,
+        maxSpeed: ai ? (4.15 + skill * 0.32) * diff.aiSpeed : 4.82,
+        accel: ai ? (0.086 + skill * 0.007) * diff.aiAccel : 0.105,
+        brake: ai ? 0.085 : 0.13,
+        turnRate: ai ? 0.029 * diff.aiTurn : 0.033,
+        drag: ai ? 0.987 : 0.986,
+        offDrag: ai ? 0.88 : 0.84,
         color,
         ai,
         skill,
@@ -559,22 +559,22 @@
       const targetPoint = pointOnMid(targetAngle + lookAhead, 0);
       const desired = Math.atan2(targetPoint.y - car.y, targetPoint.x - car.x);
       const diff = normalizeAngle(desired - car.angle);
-      const steerDivisor = state.difficulty === 'hard' ? 0.62 : state.difficulty === 'normal' ? 0.75 : 0.85;
+      const steerDivisor = state.difficulty === 'hard' ? 0.52 : state.difficulty === 'normal' ? 0.64 : 0.78;
       const steerInput = clamp(diff / steerDivisor, -1, 1);
 
-      car.steer = lerp(car.steer, steerInput, state.difficulty === 'hard' ? 0.22 : 0.16);
+      car.steer = lerp(car.steer, steerInput, state.difficulty === 'hard' ? 0.26 : state.difficulty === 'normal' ? 0.20 : 0.15);
       const speedFactor = clamp(Math.abs(car.speed) / 2.1, 0.22, 1);
       car.angle += car.steer * car.turnRate * speedFactor;
 
       const road = trackFieldValue(car.x, car.y);
-      const hardBonus = state.difficulty === 'hard' ? 0.03 : 0;
-      const basePush = diffCfg.aiPush + hardBonus + Math.sin(performance.now() * 0.0012 + car.skill) * 0.015;
+      const difficultyBonus = state.difficulty === 'hard' ? 0.05 : state.difficulty === 'normal' ? 0.025 : 0;
+      const basePush = diffCfg.aiPush + difficultyBonus + Math.sin(performance.now() * 0.0012 + car.skill) * 0.012;
       const targetSpeed = road.onRoad
-        ? car.maxSpeed * clamp(basePush, 0.65, state.difficulty === 'hard' ? 1.12 : 1.02)
-        : car.maxSpeed * 0.40;
+        ? car.maxSpeed * clamp(basePush, 0.72, state.difficulty === 'hard' ? 1.16 : state.difficulty === 'normal' ? 1.08 : 0.96)
+        : car.maxSpeed * 0.36;
 
       if (car.speed < targetSpeed) car.speed += car.accel;
-      else car.speed *= 0.989;
+      else car.speed *= 0.992;
 
       car.speed = clamp(car.speed, 0, car.maxSpeed);
     }
@@ -585,7 +585,7 @@
       car.y += Math.sin(car.angle) * car.speed;
       car.speed *= road.onRoad ? car.drag : car.offDrag;
 
-      if (!road.onRoad && Math.random() < 0.18) {
+      if (!road.onRoad && Math.random() < 0.24) {
         spawnDust(car);
       }
 
@@ -1001,7 +1001,7 @@
       cardEyebrow.textContent = 'Arcade Racing';
       cardTitle.textContent = 'DRIFT CROWN';
       cardText1.textContent = 'Carreras top down con control real por ratón. El coche gira hacia el cursor de forma limpia y estable, sin derrape.';
-      cardText2.textContent = 'Cada vez que se carga el juego aparece un mapa distinto al azar. La dificultad cambia de verdad la velocidad, la trazada y la presión de la IA.';
+      cardText2.textContent = 'Cada vez que se carga el juego aparece un mapa distinto al azar. Ahora la dificultad es más exigente: la IA corre mejor, traza mejor y castiga más los errores.';
       startBtn.textContent = 'Empezar carrera';
       newMapBtn.style.display = 'inline-block';
       updateHUD();
