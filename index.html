@@ -460,18 +460,18 @@
     };
 
     const maps = [
-      { name: 'Monarch GP', theme: 'sunset', worldScale: 1.55, innerRatioX: 0.76, innerRatioY: 0.60, laneCurve: 0.70, scenery: 'palms' },
-      { name: 'Midnight Marina GP', theme: 'neon', worldScale: 1.62, innerRatioX: 0.73, innerRatioY: 0.56, laneCurve: 0.64, scenery: 'lights' },
-      { name: 'Emerald Grand Loop', theme: 'forest', worldScale: 1.72, innerRatioX: 0.78, innerRatioY: 0.60, laneCurve: 0.72, scenery: 'trees' },
-      { name: 'Imperial Desert GP', theme: 'desert', worldScale: 1.68, innerRatioX: 0.74, innerRatioY: 0.57, laneCurve: 0.68, scenery: 'rocks' },
-      { name: 'Blue Glacier Circuit', theme: 'neon', worldScale: 1.76, innerRatioX: 0.75, innerRatioY: 0.58, laneCurve: 0.69, scenery: 'lights' },
-      { name: 'Canyon Crown Prix', theme: 'desert', worldScale: 1.88, innerRatioX: 0.80, innerRatioY: 0.59, laneCurve: 0.74, scenery: 'rocks' },
-      { name: 'Jungle Sovereign', theme: 'forest', worldScale: 1.84, innerRatioX: 0.77, innerRatioY: 0.59, laneCurve: 0.71, scenery: 'trees' },
-      { name: 'Golden Mirage GP', theme: 'sunset', worldScale: 1.92, innerRatioX: 0.81, innerRatioY: 0.61, laneCurve: 0.75, scenery: 'palms' },
-      { name: 'Nocturne Ring', theme: 'neon', worldScale: 1.80, innerRatioX: 0.74, innerRatioY: 0.55, laneCurve: 0.66, scenery: 'lights' },
-      { name: 'Verdant Royal Circuit', theme: 'forest', worldScale: 1.96, innerRatioX: 0.82, innerRatioY: 0.62, laneCurve: 0.76, scenery: 'trees' },
-      { name: 'Solar Apex GP', theme: 'sunset', worldScale: 2.02, innerRatioX: 0.83, innerRatioY: 0.63, laneCurve: 0.78, scenery: 'palms' },
-      { name: 'Titan International', theme: 'desert', worldScale: 2.12, innerRatioX: 0.84, innerRatioY: 0.63, laneCurve: 0.79, scenery: 'rocks' }
+      { name: 'Monarch GP', theme: 'sunset', scale: 1.10, roadWidth: 220, stretchX: 1.45, stretchY: 0.82, warpA: 0.18, warpB: 0.10, warpC: 0.05, phase: 0.10, scenery: 'palms' },
+      { name: 'Midnight Marina GP', theme: 'neon', scale: 1.16, roadWidth: 215, stretchX: 1.52, stretchY: 0.80, warpA: 0.16, warpB: 0.12, warpC: 0.07, phase: 0.70, scenery: 'lights' },
+      { name: 'Emerald Grand Loop', theme: 'forest', scale: 1.18, roadWidth: 220, stretchX: 1.58, stretchY: 0.84, warpA: 0.20, warpB: 0.09, warpC: 0.06, phase: 1.10, scenery: 'trees' },
+      { name: 'Imperial Desert GP', theme: 'desert', scale: 1.20, roadWidth: 225, stretchX: 1.62, stretchY: 0.78, warpA: 0.17, warpB: 0.14, warpC: 0.05, phase: 1.80, scenery: 'rocks' },
+      { name: 'Blue Glacier Circuit', theme: 'neon', scale: 1.22, roadWidth: 210, stretchX: 1.54, stretchY: 0.79, warpA: 0.15, warpB: 0.15, warpC: 0.08, phase: 2.30, scenery: 'lights' },
+      { name: 'Canyon Crown Prix', theme: 'desert', scale: 1.26, roadWidth: 230, stretchX: 1.70, stretchY: 0.77, warpA: 0.22, warpB: 0.10, warpC: 0.06, phase: 2.80, scenery: 'rocks' },
+      { name: 'Jungle Sovereign', theme: 'forest', scale: 1.24, roadWidth: 220, stretchX: 1.64, stretchY: 0.83, warpA: 0.19, warpB: 0.11, warpC: 0.07, phase: 3.10, scenery: 'trees' },
+      { name: 'Golden Mirage GP', theme: 'sunset', scale: 1.28, roadWidth: 235, stretchX: 1.76, stretchY: 0.80, warpA: 0.23, warpB: 0.10, warpC: 0.05, phase: 3.60, scenery: 'palms' },
+      { name: 'Nocturne Ring', theme: 'neon', scale: 1.20, roadWidth: 215, stretchX: 1.56, stretchY: 0.78, warpA: 0.16, warpB: 0.13, warpC: 0.08, phase: 4.10, scenery: 'lights' },
+      { name: 'Verdant Royal Circuit', theme: 'forest', scale: 1.30, roadWidth: 230, stretchX: 1.80, stretchY: 0.84, warpA: 0.22, warpB: 0.10, warpC: 0.06, phase: 4.50, scenery: 'trees' },
+      { name: 'Solar Apex GP', theme: 'sunset', scale: 1.34, roadWidth: 240, stretchX: 1.88, stretchY: 0.82, warpA: 0.24, warpB: 0.11, warpC: 0.06, phase: 5.00, scenery: 'palms' },
+      { name: 'Titan International', theme: 'desert', scale: 1.38, roadWidth: 245, stretchX: 1.96, stretchY: 0.80, warpA: 0.26, warpB: 0.10, warpC: 0.07, phase: 5.50, scenery: 'rocks' }
     ];
 
     const upgradeDefs = [
@@ -497,12 +497,11 @@
     const track = {
       cx: 0,
       cy: 0,
-      outerA: 1800,
-      outerB: 1100,
-      innerA: 1300,
-      innerB: 700,
-      laneMidA: 1550,
-      laneMidB: 900,
+      roadWidth: 220,
+      baseA: 3000,
+      baseB: 1200,
+      samples: [],
+      bounds: { minX: -3200, maxX: 3200, minY: -1600, maxY: 1600 },
       map: maps[state.currentMapIndex]
     };
 
@@ -535,13 +534,63 @@
       track.map = maps[state.currentMapIndex];
       track.cx = 0;
       track.cy = 0;
-      track.outerA = 2850 * track.map.worldScale;
-      track.outerB = 880 * track.map.worldScale;
-      track.innerA = track.outerA * track.map.innerRatioX;
-      track.innerB = track.outerB * track.map.innerRatioY;
-      track.laneMidA = (track.outerA + track.innerA) * 0.5;
-      track.laneMidB = (track.outerB + track.innerB) * 0.5;
+      track.baseA = 2600 * track.map.scale * track.map.stretchX;
+      track.baseB = 1100 * track.map.scale * track.map.stretchY;
+      track.roadWidth = track.map.roadWidth;
+      sampleTrack();
       camera.zoom = getBaseZoom();
+    }
+
+    function centerPoint(angle) {
+      const m = track.map;
+      const rx = track.baseA * (1 + m.warpA * Math.cos(2 * angle + m.phase) + m.warpB * Math.sin(3 * angle - m.phase * 0.7));
+      const ry = track.baseB * (1 + (m.warpA * 0.55) * Math.sin(2 * angle - m.phase * 0.8) - m.warpC * Math.cos(4 * angle + m.phase * 0.5));
+      return {
+        x: track.cx + Math.cos(angle) * rx,
+        y: track.cy + Math.sin(angle) * ry
+      };
+    }
+
+    function tangentAngleOnTrack(angle) {
+      const d = 0.003;
+      const p1 = centerPoint(angle - d);
+      const p2 = centerPoint(angle + d);
+      return Math.atan2(p2.y - p1.y, p2.x - p1.x);
+    }
+
+    function sampleTrack() {
+      track.samples = [];
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      const total = 420;
+      for (let i = 0; i <= total; i++) {
+        const angle = (i / total) * Math.PI * 2;
+        const p = centerPoint(angle);
+        const pPrev = centerPoint(angle - 0.003);
+        const pNext = centerPoint(angle + 0.003);
+        const tangent = Math.atan2(pNext.y - pPrev.y, pNext.x - pPrev.x);
+        track.samples.push({ angle, x: p.x, y: p.y, tangent });
+        minX = Math.min(minX, p.x);
+        minY = Math.min(minY, p.y);
+        maxX = Math.max(maxX, p.x);
+        maxY = Math.max(maxY, p.y);
+      }
+      track.bounds = { minX, minY, maxX, maxY };
+    }
+
+    function getClosestTrackPoint(x, y) {
+      let best = track.samples[0];
+      let bestD = Infinity;
+      for (let i = 0; i < track.samples.length; i++) {
+        const s = track.samples[i];
+        const dx = x - s.x;
+        const dy = y - s.y;
+        const d = dx * dx + dy * dy;
+        if (d < bestD) {
+          bestD = d;
+          best = s;
+        }
+      }
+      return { sample: best, dist: Math.sqrt(bestD) };
     }
 
     function angleToProgress(angle) {
@@ -558,18 +607,18 @@
     }
 
     function pointOnMid(angle, laneOffset = 0) {
-      const a = track.laneMidA + laneOffset;
-      const b = track.laneMidB + laneOffset * track.map.laneCurve;
+      const p = centerPoint(angle);
+      const t = tangentAngleOnTrack(angle);
+      const normalX = -Math.sin(t);
+      const normalY = Math.cos(t);
       return {
-        x: track.cx + Math.cos(angle) * a,
-        y: track.cy + Math.sin(angle) * b
+        x: p.x + normalX * laneOffset,
+        y: p.y + normalY * laneOffset
       };
     }
 
-    function tangentAngleOnEllipse(angle, a, b) {
-      const dx = -Math.sin(angle) * a;
-      const dy = Math.cos(angle) * b;
-      return Math.atan2(dy, dx);
+    function tangentAngleOnEllipse(angle) {
+      return tangentAngleOnTrack(angle);
     }
 
     function getUpgradeLevel(id) {
@@ -641,17 +690,16 @@
     }
 
     function trackFieldValue(x, y) {
-      const dx = x - track.cx;
-      const dy = y - track.cy;
-      const outer = (dx * dx) / (track.outerA * track.outerA) + (dy * dy) / (track.outerB * track.outerB);
-      const inner = (dx * dx) / (track.innerA * track.innerA) + (dy * dy) / (track.innerB * track.innerB);
-      return { outer, inner, onRoad: outer <= 1 && inner >= 1 };
+      const closest = getClosestTrackPoint(x, y);
+      return {
+        dist: closest.dist,
+        onRoad: closest.dist <= track.roadWidth * 0.5,
+        sample: closest.sample
+      };
     }
 
     function nearestAngleOnTrack(x, y) {
-      const dx = x - track.cx;
-      const dy = y - track.cy;
-      return Math.atan2(dy / track.laneMidB, dx / track.laneMidA);
+      return getClosestTrackPoint(x, y).sample.angle;
     }
 
     function movePlayer(car) {
@@ -725,24 +773,10 @@
     function constrainCarToTrack(car) {
       const road = trackFieldValue(car.x, car.y);
       if (road.onRoad) return;
-      const angle = nearestAngleOnTrack(car.x, car.y);
-
-      if (road.inner < 1) {
-        const p = {
-          x: track.cx + Math.cos(angle) * (track.innerA + 18),
-          y: track.cy + Math.sin(angle) * (track.innerB + 18)
-        };
-        car.x = lerp(car.x, p.x, 0.16);
-        car.y = lerp(car.y, p.y, 0.16);
-      }
-      if (road.outer > 1) {
-        const p = {
-          x: track.cx + Math.cos(angle) * (track.outerA - 18),
-          y: track.cy + Math.sin(angle) * (track.outerB - 18)
-        };
-        car.x = lerp(car.x, p.x, 0.16);
-        car.y = lerp(car.y, p.y, 0.16);
-      }
+      const p = road.sample;
+      const pull = clamp((road.dist - track.roadWidth * 0.48) / 120, 0.08, 0.24);
+      car.x = lerp(car.x, p.x, pull);
+      car.y = lerp(car.y, p.y, pull);
     }
 
     function updateProgress(car) {
@@ -876,15 +910,16 @@
 
     function drawScenery() {
       const s = track.map.scenery;
-      const count = 80;
-      for (let i = 0; i < count; i++) {
-        const ang = (i / count) * Math.PI * 2;
-        const ringA = track.outerA + 180 + (i % 6) * 22;
-        const ringB = track.outerB + 170 + (i % 5) * 24;
-        const x = track.cx + Math.cos(ang) * ringA;
-        const y = track.cy + Math.sin(ang) * ringB;
+      const step = 8;
+      for (let i = 0; i < track.samples.length; i += step) {
+        const p = track.samples[i];
+        const nx = -Math.sin(p.tangent);
+        const ny = Math.cos(p.tangent);
+        const offset = track.roadWidth * 0.95 + 160 + (i % 5) * 24;
+        const x = p.x + nx * offset;
+        const y = p.y + ny * offset;
         if (s === 'lights') {
-          ctx.fillStyle = i % 2 ? 'rgba(114,215,255,0.24)' : 'rgba(255,93,188,0.24)';
+          ctx.fillStyle = i % 16 < 8 ? 'rgba(114,215,255,0.24)' : 'rgba(255,93,188,0.24)';
           ctx.beginPath();
           ctx.arc(x, y, 16 + (i % 3) * 2, 0, Math.PI * 2);
           ctx.fill();
@@ -911,48 +946,41 @@
 
     function drawTrack() {
       ctx.save();
-      ctx.translate(track.cx, track.cy);
-      ctx.fillStyle = 'rgba(255,255,255,0.03)';
       ctx.beginPath();
-      ctx.ellipse(0, 0, track.outerA + 40, track.outerB + 40, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = '#2f343b';
-      ctx.beginPath();
-      ctx.ellipse(0, 0, track.outerA, track.outerB, 0, 0, Math.PI * 2);
-      ctx.fill();
+      for (let i = 0; i < track.samples.length; i++) {
+        const p = track.samples[i];
+        if (i === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      }
+      ctx.closePath();
 
       ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 20;
-      ctx.beginPath();
-      ctx.ellipse(0, 0, track.outerA - 10, track.outerB - 10, 0, 0, Math.PI * 2);
+      ctx.lineWidth = track.roadWidth + 18;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      ctx.strokeStyle = '#2f343b';
+      ctx.lineWidth = track.roadWidth;
       ctx.stroke();
 
       ctx.strokeStyle = 'rgba(255,255,255,0.55)';
-      ctx.setLineDash([70, 55]);
       ctx.lineWidth = 7;
-      ctx.beginPath();
-      ctx.ellipse(0, 0, track.laneMidA, track.laneMidB, 0, 0, Math.PI * 2);
+      ctx.setLineDash([70, 55]);
       ctx.stroke();
       ctx.setLineDash([]);
 
-      if (track.map.theme === 'neon') {
-        ctx.shadowColor = 'rgba(114,215,255,0.25)';
-        ctx.shadowBlur = 35;
-      }
-      ctx.fillStyle = track.map.theme === 'desert' ? '#7a6745' : '#296b34';
-      if (track.map.theme === 'neon') ctx.fillStyle = '#182126';
-      ctx.beginPath();
-      ctx.ellipse(0, 0, track.innerA, track.innerB, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.shadowBlur = 0;
-
+      const start = centerPoint(-Math.PI / 2);
+      const tangent = tangentAngleOnTrack(-Math.PI / 2);
+      const nx = -Math.sin(tangent);
+      const ny = Math.cos(tangent);
       ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 14;
-      for (let x = -90; x <= 90; x += 45) {
+      ctx.lineWidth = 12;
+      for (let i = -2; i <= 2; i++) {
+        const o = i * 34;
         ctx.beginPath();
-        ctx.moveTo(x, -track.outerB);
-        ctx.lineTo(x, -track.innerB);
+        ctx.moveTo(start.x + nx * o - Math.cos(tangent) * track.roadWidth * 0.5, start.y + ny * o - Math.sin(tangent) * track.roadWidth * 0.5);
+        ctx.lineTo(start.x + nx * o + Math.cos(tangent) * track.roadWidth * 0.5, start.y + ny * o + Math.sin(tangent) * track.roadWidth * 0.5);
         ctx.stroke();
       }
       ctx.restore();
@@ -1081,33 +1109,41 @@
       ctx.fill();
       ctx.stroke();
 
+      const bounds = track.bounds;
+      const scale = Math.min((w - 24) / (bounds.maxX - bounds.minX), (h - 24) / (bounds.maxY - bounds.minY));
       ctx.save();
       ctx.beginPath();
       roundRectPath(x, y, w, h, 18);
       ctx.clip();
-      ctx.translate(x + w / 2, y + h / 2);
-      const scale = Math.min((w - 24) / (track.outerA * 2), (h - 24) / (track.outerB * 2));
+      ctx.translate(x + 12, y + 12);
       ctx.scale(scale, scale);
-      ctx.translate(-track.cx, -track.cy);
+      ctx.translate(-bounds.minX, -bounds.minY);
 
-      ctx.fillStyle = '#2f343b';
       ctx.beginPath();
-      ctx.ellipse(track.cx, track.cy, track.outerA, track.outerB, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#284f2d';
-      ctx.beginPath();
-      ctx.ellipse(track.cx, track.cy, track.innerA, track.innerB, 0, 0, Math.PI * 2);
-      ctx.fill();
+      for (let i = 0; i < track.samples.length; i++) {
+        const p = track.samples[i];
+        if (i === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = track.roadWidth + 18;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.stroke();
+      ctx.strokeStyle = '#2f343b';
+      ctx.lineWidth = track.roadWidth;
+      ctx.stroke();
 
       for (const rival of rivals) {
         ctx.fillStyle = rival.color;
         ctx.beginPath();
-        ctx.arc(rival.x, rival.y, 18, 0, Math.PI * 2);
+        ctx.arc(rival.x, rival.y, 24, 0, Math.PI * 2);
         ctx.fill();
       }
       ctx.fillStyle = '#4ad0ff';
       ctx.beginPath();
-      ctx.arc(player.x, player.y, 20, 0, Math.PI * 2);
+      ctx.arc(player.x, player.y, 26, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
     }
@@ -1161,7 +1197,7 @@
       overlayCard.innerHTML = `
         <div class="eyebrow">Grand Prix Arcade</div>
         <h2>DRIFT CROWN GP</h2>
-        <p>Ahora los circuitos tienen mucho más recorrido real, con rectas largas y vueltas más extensas, más cercanas a un gran premio. La cámara sigue al coche para que la pista no se sienta simplemente ampliada.</p>
+        <p>Ahora los circuitos tienen mucho más recorrido real y trazados más largos de verdad, no solo pistas ampliadas. La cámara sigue al coche para que la vuelta se sienta como un gran premio largo.</p>
         <p>La dificultad cambia la velocidad, la trazada y la presión de la IA. Cada nueva carrera usa un circuito grande distinto.</p>
         <div class="difficultyLabel">Elige dificultad</div>
         <div class="difficultyRow">
