@@ -545,7 +545,7 @@
     }
 
     function catmullRom(p0, p1, p2, p3, t) {
-      const tension = 0.28;
+      const tension = 0.16;
       const t2 = t * t;
       const t3 = t2 * t;
 
@@ -558,6 +558,22 @@
         x: (2 * t3 - 3 * t2 + 1) * p1.x + (t3 - 2 * t2 + t) * m1x + (-2 * t3 + 3 * t2) * p2.x + (t3 - t2) * m2x,
         y: (2 * t3 - 3 * t2 + 1) * p1.y + (t3 - 2 * t2 + t) * m1y + (-2 * t3 + 3 * t2) * p2.y + (t3 - t2) * m2y
       };
+    }
+
+    function smoothClosedPoints(points, iterations = 2) {
+      let pts = points.map(p => ({ x: p.x, y: p.y }));
+      for (let k = 0; k < iterations; k++) {
+        const next = [];
+        const n = pts.length;
+        for (let i = 0; i < n; i++) {
+          const a = pts[i];
+          const b = pts[(i + 1) % n];
+          next.push({ x: a.x * 0.75 + b.x * 0.25, y: a.y * 0.75 + b.y * 0.25 });
+          next.push({ x: a.x * 0.25 + b.x * 0.75, y: a.y * 0.25 + b.y * 0.75 });
+        }
+        pts = next;
+      }
+      return pts;
     }
 
     function centerPoint(angle) {
@@ -598,10 +614,11 @@
       track.cy = H / 2 + Math.min(18, H * 0.02);
       track.roadWidth = track.map.roadWidth;
       track.baseScale = Math.min(W, H) * 0.28 * track.map.scale;
-      track.controlPoints = track.map.points.map(([x, y]) => ({
+      const rawPoints = track.map.points.map(([x, y]) => ({
         x: track.cx + x * track.baseScale,
         y: track.cy + y * track.baseScale
       }));
+      track.controlPoints = smoothClosedPoints(rawPoints, 2);
       sampleTrack();
     }
 
@@ -1127,7 +1144,7 @@
       overlayCard.innerHTML = `
         <div class="eyebrow">Arcade Racing</div>
         <h2>DRIFT CROWN</h2>
-        <p>Las pistas mantienen el estilo del principio, pero ahora están inspiradas en circuitos simplificados: más curvas distintas, más cambios de dirección y menos sensación de óvalo. Mantengo la tienda, los puntos y las mejoras entre carreras.</p>
+        <p>Las pistas mantienen el estilo del principio, pero ahora tienen curvas más amplias y fluidas, inspiradas en circuitos simplificados: más cambios de dirección, menos sensación de óvalo y menos giros cerrados. Mantengo la tienda, los puntos y las mejoras entre carreras.</p>
         <p>La dificultad cambia la velocidad, la trazada y la presión de la IA. Cada nueva carrera usa un circuito clásico con otra forma.</p>
         <div class="difficultyLabel">Elige dificultad</div>
         <div class="difficultyRow">
